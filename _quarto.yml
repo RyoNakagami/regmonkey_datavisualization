@@ -3,11 +3,11 @@ project:
   output-dir: _book
 
 book:
-  title: "Sample for Regression Monkeys"
-  # repo-url: https://github.com/RyoNakagami/statistics-for-regression-monkey
-  # site-url: https://ryonakagami.github.io/statistics-for-regression-monkey/
-  # google-analytics: 
-  #   tracking-id: "G-QEFX7FVCDM"
+  title: "Data Visualization for Regression Monkeys"
+  repo-url: https://github.com/RyoNakagami/regmonkey_datavisualization
+  site-url: https://ryonakagami.github.io/regmonkey_datavisualization/
+  google-analytics: 
+    tracking-id: "G-QEFX7FVCDM"
   favicon: ./img/favicon.ico
   sharing: twitter
   sidebar:

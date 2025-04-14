@@ -5,11 +5,6 @@ date: "2025-01-07"
 date-modified: last-modified
 number_sections: false
 code-fold: true
-listing:
-      sort: "date desc"
-      sort-ui: false
-      filter-ui: false
-      feed: true
 # when you run this file locally, do not forget to run poetry shell
 ---
 
@@ -49,7 +44,7 @@ bar chartなりscatter plotなり，読み手がデータについて正確な�
 
 <strong > &#9654;&nbsp; 可視化で用いるプログラミング言語</strong>
 
-- 主にPython 3.11.8 + [poetry](https://python-poetry.org/) を用います
+- 主にPython 3.12.9 + [poetry](https://python-poetry.org/) を用います
 - 分析コードは[Repository](<repository url>)のqmdファイルがそのままソースコードとなっています
 
 参考として以下のようにコードブロックと合わせて出力されます．

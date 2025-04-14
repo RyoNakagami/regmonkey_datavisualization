@@ -123,7 +123,7 @@ def plot_category_frequency_plotly(
     # Create cumulative line trace
     line = go.Scatter(
         x=data[category_column],
-        y=df_sorted[cumulative_column],
+        y=data[cumulative_column],
         name=y2_label,
         yaxis="y2",
         mode="lines+markers",
@@ -290,7 +290,7 @@ def heatmap_frequency(
     figsize = (10, 6)
 ):
     table = pd.pivot_table(
-        df_sorted,
+        data,
         values=value_column,
         index=[yaxis_column],
         columns=[xaxis_column],

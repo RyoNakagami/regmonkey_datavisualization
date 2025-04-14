@@ -88,8 +88,6 @@ div.csl-indent {
 <meta name="quarto:offset" content="./">
 <link href="./posts/1D-datavisualization/chapter-header.html" rel="next">
 <link href="././img/favicon.ico" rel="icon">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -128,35 +126,6 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-QEFX7FVCDM"></script>
 
 <script type="text/javascript">
@@ -214,7 +183,7 @@ window.Quarto = {
 };
 </script>
 
-<link rel="alternate" type="application/rss+xml" title="Data Visualization for Regression Monkeys" href="index.xml" data-external="1"></head>
+</head>
 
 <body class="nav-sidebar floating">
 
@@ -411,11 +380,11 @@ window.Quarto = {
 <p>「余分な情報は削ぎ落とせ」と上司からコメントをもらったとしても，なにが余分な情報なのかは場面によって異なります．そのため，なにがRulesでなにがSuggestionなのかを区別する習慣が重要になります．</p>
 <p><strong> ▶&nbsp; 可視化で用いるプログラミング言語</strong></p>
 <ul>
-<li>主にPython 3.11.8 + <a href="https://python-poetry.org/">poetry</a> を用います</li>
+<li>主にPython 3.12.9 + <a href="https://python-poetry.org/">poetry</a> を用います</li>
 <li>分析コードは<a href="repository url">Repository</a>のqmdファイルがそのままソースコードとなっています</li>
 </ul>
 <p>参考として以下のようにコードブロックと合わせて出力されます．</p>
-<div id="2ecaa4d6" class="cell" data-execution_count="1">
+<div id="b70659bf" class="cell" data-execution_count="1">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Hallo World"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -444,73 +413,10 @@ points: Visualization that means something</a></em>, Indianapolis, Ind.
 </div>
 
 
-
 </section>
 </section>
 
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-listing-date-sort="1744588800000" data-listing-file-modified-sort="1744635066082" data-listing-date-modified-sort="1744635066000" data-listing-reading-time-sort="9" data-listing-word-count-sort="1671">
-<div class="thumbnail">
-<p><a href="./posts/1D-datavisualization/frequency-counts-of-data-with-bar-plot.html" class="no-external"></a></p><a href="./posts/1D-datavisualization/frequency-counts-of-data-with-bar-plot.html" class="no-external">
-<p class="card-img-top"><img src="posts/1D-datavisualization/frequency-counts-of-data-with-bar-plot_files/figure-html/cell-7-output-1.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/1D-datavisualization/frequency-counts-of-data-with-bar-plot.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/1D-datavisualization/frequency-counts-of-data-with-bar-plot.html" class="no-external">質的データの出現頻度</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/1D-datavisualization/frequency-counts-of-data-with-bar-plot.html" class="no-external"></a>
-</div>
-<div class="listing-description">
-<a href="./posts/1D-datavisualization/frequency-counts-of-data-with-bar-plot.html" class="no-external">以下のようなカテゴリ別出現頻度のデータが与えられたとします．</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/1D-datavisualization/frequency-counts-of-data-with-bar-plot.html" class="no-external">
-<div class="listing-date">
-2025-04-14
-</div>
-<div class="listing-author">
-Ryo Nakagami
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-listing-date-sort="1723680000000" data-listing-file-modified-sort="1744635066081" data-listing-date-modified-sort="1744635066000" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
-<div class="thumbnail">
-<p><a href="./posts/1D-datavisualization/chapter-header.html" class="no-external"></a></p><a href="./posts/1D-datavisualization/chapter-header.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/1D-datavisualization/chapter-header.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/1D-datavisualization/chapter-header.html" class="no-external">1次元データ</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/1D-datavisualization/chapter-header.html" class="no-external"></a>
-</div>
-<div class="listing-description">
-<a href="./posts/1D-datavisualization/chapter-header.html" class="no-external"></a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/1D-datavisualization/chapter-header.html" class="no-external">
-<div class="listing-date">
-2024-08-15
-</div>
-<div class="listing-author">
-Ryo Nakagami
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script>
    document.querySelectorAll('.custom_problem .theorem-title').forEach((title) => {
        let modName = title.innerHTML;

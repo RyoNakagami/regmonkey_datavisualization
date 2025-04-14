@@ -21,21 +21,35 @@ listing:
 |:---:|:---|
 |[Ryo's Tech Blog](https://ryonakagami.github.io/)|日々の徒然日記，Linuxまわりや開発お作法を主に取り扱う|
 |[Statistics for Regression Monkeys](https://ryonakagami.github.io/statistics-for-regression-monkey/)|数理統計学入門ノート|
+|[Python package building techniques for regmonkeys](https://ryonakagami.github.io/python-statisticalpackage-techniques/)|Python分析パッケージ作成ガイド|
 |[OhGoshGit!?!](https://ohgoshgit.github.io/)|Git trouble-shooting note|
 |[statistics dojo](https://ryonakagami.github.io/statistics_dojo/)|統計学基礎問題練習ノート, Rを主に扱う|
 
-### What is it about?
 
-データ分析を学ぶ及び実践するにあたって５つの観点があると考えています：
+### What is Data Visualization about?
 
-1. 
+良いデータ可視化は，統計分析と可視化デザインの２つの能力に基づいています．
 
-このQuarto Bookではチャプターごとに各事項にフォーカスしてノートをまとめています．
+- 統計分析能力がない可視化デザインは，単なる様式美の提供にとどまり
+- 可視化デザイン能力が伴わない統計分析は単なる分析，データ探索にとなります
 
-<strong > &#9654;&nbsp; プログラミング言語</strong>
+両方のスキルを適切に組み合わせることによって，データ探索とstory-tellingが結びついて，データの理解を目的とする科学的なコミュニケーションとなります．
+
+<strong > &#9654;&nbsp; Dataとはなにか？</strong>
+
+Dataとは，スプレッドシートやカンマ区切りのレコードの集合といったコンピュター上での存在形式を指すのではなく，一義的には「世界の断面を記録したもの」です．
+
+<strong > &#9654;&nbsp; Rules vs Suggestions</strong>
+
+bar chartなりscatter plotなり，読み手がデータについて正確な解釈をすることができる可視化でなければならない，というのはデータ可視化のルールの１つです．
+一方，axisのスケールなどは科学分野ではScientific Notation(例: $-1.602\times 10^{-19}$)を用いるべきなど，コミュニケーションの場面に応じて推奨が変わってきます．
+
+「余分な情報は削ぎ落とせ」と上司からコメントをもらったとしても，なにが余分な情報なのかは場面によって異なります．そのため，なにがRulesでなにがSuggestionなのかを区別する習慣が重要になります．
+
+
+<strong > &#9654;&nbsp; 可視化で用いるプログラミング言語</strong>
 
 - 主にPython 3.11.8 + [poetry](https://python-poetry.org/) を用います
-- ケースに応じて，Rを用いる場合もあります
 - 分析コードは[Repository](<repository url>)のqmdファイルがそのままソースコードとなっています
 
 参考として以下のようにコードブロックと合わせて出力されます．
@@ -44,6 +58,8 @@ listing:
 #| code-fold: show
 print("Hallo World")
 ```
+
+
 
 ### Contributions
 
@@ -56,4 +72,5 @@ print("Hallo World")
 References
 ----------
 ::: {#refs}
+@DataPoints
 :::

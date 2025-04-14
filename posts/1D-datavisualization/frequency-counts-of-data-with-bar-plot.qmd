@@ -1,0 +1,380 @@
+---
+title: "質的データの出現頻度"
+jupyter: python3
+author: "Ryo Nakagami"
+date: "2025-04-14"
+date-modified: last-modified
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+# when you run this file locally, do not forget to run poetry shell
+---
+
+## 問題設定
+
+以下のようなカテゴリ別出現頻度のデータが与えられたとします．
+
+- `faulty_component`: 故障箇所
+- `faulty_category`: 故障内容に応じた分類
+- `count`: 出現頻度
+
+```{python}
+import pandas as pd
+
+
+data = {
+    "faulty_component": [
+        "ハードディスク", "ハードディスク",
+        "メモリ", "メモリ",
+        "電源ユニット", "電源ユニット",
+        "ファン", "マザーボード",
+        "液晶ディスプレイ", "液晶ディスプレイ",
+        "ソフトウェア", "ソフトウェア"
+    ],
+    "faulty_category": [
+        "接続不良", "異音",
+        "起動不良", "ブルースクリーン",
+        "電源不安定", "電源不良",
+        "異音", "接続不良",
+        "画面不認識", "表示トラブル",
+        "起動時エラー", "アプリ強制終了"
+    ],
+    "count": [125, 87, 73, 52, 64, 91, 40, 38, 70, 33, 49, 58]
+}
+
+df = pd.DataFrame(data)
+df
+```
+
+<strong > &#9654;&nbsp; 可視化内容</strong>
+
+1. 複数カテゴリ変数を結合して生成したラベル変数をkey，出現頻度をvalueとしたデータについて，出現頻度をbar plot, 累積頻度をline plotとして可視化
+2. 2つのカテゴリ次元にわたる値の頻度分布をheatmapを用いて可視化
+
+## 可視化方針1: bar plot + line plot
+
+<strong > &#9654;&nbsp; 前処理</strong>
+
+出現頻度のカラムを用いて事前に `descending sort` を以下のように実施します．
+
+
+```{python}
+#| code-fold: show
+df_sorted = df.sort_values(by="count", ascending=False).reset_index(drop=True)
+df_sorted["cum_percent"] = df_sorted["count"].cumsum() / df_sorted["count"].sum()
+df_sorted["label"] = df_sorted["faulty_component"].astype(str) + "-" + df_sorted["faulty_category"].astype(str)
+df_sorted.head()
+```
+
+<br>
+<strong > &#9654;&nbsp; 引数テーブル</strong>
+
+|引数|説明|
+|---|---|
+|`data`|カテゴリ，件数，累積値を含む入力データ．cumulative plotが正しく動作するには，データが適切にソートされている必要がある|
+|`category_column`| x軸に使用するカテゴリ列の名前|
+|`count_column`| 棒グラフ（主軸）に使用する件数列の名前|
+|`cumulative_column`|line plot(y2-axis)に使用する累積値（例：パーセンテージ）の列の名前|
+|`xaxis_name`| : x軸のタイトル．デフォルトは `""`|
+|`y1_axis_name`| `y1-axis`のタイトル．デフォルトは `""`|
+|`y2_axis_name`| `y2-axis`のタイトル．デフォルトは `""`|
+|`y1_label`| bar plotのlegendラベル．デフォルトは `""`|
+|`y2_label`| cumulative plotのlegendラベル．デフォルトは `""`|
+|`figure_title`| 図全体のタイトル．デフォルトは `""`|
+|`figsize`|`matplotlib`用のfigure size設定値(`tuple`)|
+
+: Args {tbl-colwidths="[20, 80]"}
+
+<br>
+<strong > &#9654;&nbsp; `Plotly` を用いた可視化</strong>
+
+
+```{python}
+# | code-fold: show
+import plotly.graph_objects as go
+
+
+def plot_category_frequency_plotly(
+    data: pd.DataFrame,
+    category_column: str,
+    count_column: str,
+    cumulative_column: str,
+    xaxis_name: str = "",
+    y1_axis_name: str = "",
+    y2_axis_name: str = "",
+    y1_label: str = "",
+    y2_label: str = "",
+    figure_title: str = "",
+) -> go.Figure:
+    """
+    - カテゴリごとの件数を棒グラフで、累積値（例：累積パーセンテージ）を折れ線グラフで可視化するPlotly図を生成
+    - cumulative plotが正しく動作するには，データが適切にソートされている必要がある
+    """
+    # create bar trace
+    bar = go.Bar(
+        x=data[category_column],
+        y=data[count_column],
+        name=y1_label,
+        yaxis="y1",
+        marker=dict(color="#6699CC"),
+    )
+
+    # Create cumulative line trace
+    line = go.Scatter(
+        x=data[category_column],
+        y=df_sorted[cumulative_column],
+        name=y2_label,
+        yaxis="y2",
+        mode="lines+markers",
+        line=dict(color="#000000", dash="dot"),
+    )
+
+    # Layout
+    layout = go.Layout(
+        title=dict(
+            text=figure_title,
+            x=0.,
+            xanchor="left",
+            yanchor="top",
+        ),
+        margin=dict(t=50),
+        xaxis=dict(title=xaxis_name, tickangle=45),
+        yaxis=dict(title=y1_axis_name),
+        yaxis2=dict(
+            title=y2_axis_name,
+            overlaying="y",
+            side="right",
+            range=[0, 1.1],
+            gridcolor="#EFF5F5",
+        ),
+        legend=dict(x=1.05, y=1.0, orientation="v"),
+    )
+
+    # Plot
+    fig = go.Figure(data=[bar, line], layout=layout).update_layout(
+        {"plot_bgcolor": "#EFF5F5", "yaxis": {"gridcolor": "#EFF5F5"}}
+    )
+
+    return fig
+```
+
+実行コードは以下，
+
+```{python}
+#| code-fold: show
+fig = plot_category_frequency_plotly(
+    data=df_sorted,
+    category_column="label",
+    count_column="count",
+    cumulative_column="cum_percent",
+    xaxis_name="Faulty Category",
+    y1_axis_name="Frequency",
+    y2_axis_name="Cumulative Percentage",
+    y1_label="件数",
+    y2_label="累積割合",
+    figure_title="PC Faulty component frequency",
+)
+fig.show()
+```
+
+<br>
+<strong > &#9654;&nbsp; `matplotlib` を用いた可視化</strong>
+
+```{python}
+#| code-fold: show
+import matplotlib.pyplot as plt
+
+
+def plot_category_frequency_matplotlib(
+    data: pd.DataFrame,
+    category_column: str,
+    count_column: str,
+    cumulative_column: str,
+    xaxis_name: str = "",
+    y1_axis_name: str = "",
+    y2_axis_name: str = "",
+    y1_label: str = "",
+    y2_label: str = "",
+    figure_title: str = "",
+    figsize: tuple = (8, 6),
+):
+    fig, ax1 = plt.subplots(figsize=figsize)
+    ax1.set_facecolor("#EFF5F5")  # 👈 plot background color
+
+    # Bar plot on primary y-axis
+    bars = ax1.bar(
+        data[category_column], data[count_column], color="#6699CC", label=y1_label
+    )
+    ax1.set_ylabel(y1_axis_name, fontsize=12)
+    ax1.set_xlabel(xaxis_name, fontsize=12)
+    ax1.tick_params(axis="y")
+
+    # Line plot on secondary y-axis
+    ax2 = ax1.twinx()
+    line = ax2.plot(
+        data[category_column],
+        data[cumulative_column],
+        color="#000000",
+        linestyle="dotted",
+        marker="o",
+        label=y2_label,
+    )
+    ax2.set_ylabel(y2_axis_name, fontsize=12)
+    ax2.set_ylim(0, 1.1)
+    ax2.tick_params(axis="y")
+    plt.setp(ax1.get_xticklabels(), rotation=(360-45), ha="left")  # 👈 Rotate x-axis labels
+    
+    # Title and legend
+    fig.suptitle(figure_title, x=0.0, ha="left", fontsize=14)
+
+    # Combine legends from both axes
+    lines_labels = [*ax1.get_legend_handles_labels(), *ax2.get_legend_handles_labels()]
+    fig.legend(loc="upper left", bbox_to_anchor=(0.925, 0.925))
+    fig.patch.set_facecolor("#FFFFFF")
+
+    plt.tight_layout()
+    return fig, ax1, ax2
+
+```
+
+実行コードは以下，
+
+```{python}
+# | code-fold: show
+
+from regmonkey_style import stylewizard as sw
+
+# japanese language setup
+sw.set_font("IPAexGothic")
+
+
+fig, ax1, ax2 = plot_category_frequency_matplotlib(
+    data=df_sorted,
+    category_column="label",
+    count_column="count",
+    cumulative_column="cum_percent",
+    xaxis_name="Faulty Category",
+    y1_axis_name="Frequency",
+    y2_axis_name="Cumulative Percentage",
+    y1_label="件数",
+    y2_label="累積割合",
+    figure_title="PC Faulty component frequency",
+)
+plt.show()
+```
+
+## 可視化方針2: heatmap
+
+- ここでは，xaxis, yaxisとなる２つのカテゴリ変数を用いてpivot tableを作成し，それをheatmapで可視化
+- pivotにあたっての集計関数は `sum` を用いる
+- `NaN`（欠損値）はプロット前に0で補完
+- `"PuBu"` カラースケールを使用
+
+<strong > &#9654;&nbsp; 実装</strong>
+
+```{python}
+# | code-fold: show
+import seaborn as sns
+
+
+def heatmap_frequency(
+    data: pd.DataFrame,
+    xaxis_column: str,
+    yaxis_column: str,
+    value_column: str,
+    x_axis_name: str = "",
+    y_axis_name: str = "",
+    figure_title: str = "",
+    plot_type = 'plotly',
+    figsize = (10, 6)
+):
+    table = pd.pivot_table(
+        df_sorted,
+        values=value_column,
+        index=[yaxis_column],
+        columns=[xaxis_column],
+        aggfunc="sum",
+    ).fillna(0)
+
+    if plot_type == 'plotly':
+        fig = go.Figure(
+            data=go.Heatmap(
+                z=table.values,
+                x=table.columns,  # Optional: x-axis labels
+                y=table.index,  # Optional: y-axis labels
+                colorscale="PuBu",  # You can try: 'Blues', 'Hot', 'Cividis', etc.
+            )
+        )
+
+        fig.update_layout(
+            title=figure_title, xaxis_title=x_axis_name, yaxis_title=y_axis_name
+            
+        )
+
+        return fig
+    
+    else:
+         # Create the plot
+        fig, ax = plt.subplots(figsize=figsize)
+
+        sns.heatmap(
+            table.values,
+            xticklabels=table.columns,
+            yticklabels=table.index,
+            cmap="PuBu",
+            ax=ax
+        )
+
+        ax.set_xlabel(x_axis_name)
+        ax.set_ylabel(y_axis_name)
+        ax.set_title(figure_title, loc="center")
+
+        plt.xticks(rotation=(360-45), ha='left')
+        plt.yticks(rotation=0)
+
+        plt.tight_layout()
+        return fig, ax
+
+```
+
+<strong > &#9654;&nbsp; `Plotly` による可視化</strong>
+
+```{python}
+fig = heatmap_frequency(
+    data=df_sorted,
+    xaxis_column="faulty_category",
+    yaxis_column="faulty_component",
+    value_column="count",
+    x_axis_name="故障カテゴリ",
+    y_axis_name="故障箇所",
+    figure_title=dict(
+        text="故障分布",
+        font=dict(size=18),
+        automargin=True,
+        x=0.5,  # Center title
+        y=0.95,
+        xanchor="center",
+    ),
+)
+
+
+fig.show()
+```
+
+<strong > &#9654;&nbsp; `matplotlib` による可視化</strong>
+
+```{python}
+fig, ax = heatmap_frequency(
+    data=df_sorted,
+    xaxis_column='faulty_category',
+    yaxis_column='faulty_component',
+    value_column='count',
+    x_axis_name='故障カテゴリ',
+    y_axis_name='故障箇所',
+    figure_title='故障分布',
+    plot_type = 'matplotlib',
+)
+
+plt.show()
+```

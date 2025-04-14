@@ -15,8 +15,8 @@ book:
        - text: Blog Series
          icon: book
          menu:
-         - text: Ryo's Tech Blog
-           href: https://ryonakagami.github.io/
+         - text: Regmonkey Datascience Blog
+           href: https://ryonakagami.github.io/regmonkey-datascience-blog/
            aria-label: blog-general
          - text: stats for regmonkey
            href: https://ryonakagami.github.io/statistics-for-regression-monkey/
@@ -38,6 +38,10 @@ book:
         href: LICENSE
   chapters:
     - index.qmd
+    - part: posts/1D-datavisualization/chapter-header.qmd
+      chapters:
+        - posts/1D-datavisualization/frequency-counts-of-data-with-bar-plot.qmd
+  
 
   # appendices: 
     # - 
@@ -47,6 +51,7 @@ format:
     include-in-header: 
       - include/setup_googletagmanager.html
       - include/custom_webfont.html
+      - include/mathjax.html
     include-in-body: include/setup_googletagmanager_body.html
     include-after-body: include/custom_section.html
     lang: ja_JP.UTF-8

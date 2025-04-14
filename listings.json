@@ -1,6 +1,9 @@
 [
   {
     "listing": "/index.html",
-    "items": []
+    "items": [
+      "/posts/1D-datavisualization/frequency-counts-of-data-with-bar-plot.html",
+      "/posts/1D-datavisualization/chapter-header.html"
+    ]
   }
 ]

@@ -226,6 +226,12 @@ require(['plotly'], function(Plotly) {
  <span class="menu-text">Welcome</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="../../posts/1D-datavisualization/chapter-header.html" class="sidebar-item-text sidebar-link">
@@ -253,9 +259,12 @@ require(['plotly'], function(Plotly) {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#問題設定" id="toc-問題設定" class="nav-link active" data-scroll-target="#問題設定">問題設定</a></li>
-  <li><a href="#可視化方針1-bar-plot-line-plot" id="toc-可視化方針1-bar-plot-line-plot" class="nav-link" data-scroll-target="#可視化方針1-bar-plot-line-plot">可視化方針1: bar plot + line plot</a></li>
-  <li><a href="#可視化方針2-heatmap" id="toc-可視化方針2-heatmap" class="nav-link" data-scroll-target="#可視化方針2-heatmap">可視化方針2: heatmap</a></li>
+  <li><a href="#問題設定" id="toc-問題設定" class="nav-link active" data-scroll-target="#問題設定">問題設定</a>
+  <ul class="collapse">
+  <li><a href="#可視化方針" id="toc-可視化方針" class="nav-link" data-scroll-target="#可視化方針">可視化方針</a></li>
+  </ul></li>
+  <li><a href="#可視化実装1-パレート図" id="toc-可視化実装1-パレート図" class="nav-link" data-scroll-target="#可視化実装1-パレート図">可視化実装1: パレート図</a></li>
+  <li><a href="#可視化実装2-heatmap" id="toc-可視化実装2-heatmap" class="nav-link" data-scroll-target="#可視化実装2-heatmap">可視化実装2: heatmap</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/regmonkey_datavisualization/edit/main/posts/1D-datavisualization/frequency-counts-of-data-with-bar-plot.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/regmonkey_datavisualization/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -288,7 +297,7 @@ require(['plotly'], function(Plotly) {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">2025-04-15</p>
+      <p class="date-modified">2025-04-16</p>
     </div>
   </div>
     
@@ -307,7 +316,7 @@ require(['plotly'], function(Plotly) {
 <li><code>faulty_category</code>: 故障内容に応じた分類</li>
 <li><code>count</code>: 出現頻度</li>
 </ul>
-<div id="ad7c0ad5" class="cell" data-execution_count="1">
+<div id="4139b2a9" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -428,17 +437,147 @@ require(['plotly'], function(Plotly) {
 </div>
 </div>
 </div>
-<p><strong> ▶&nbsp; 可視化内容</strong></p>
+<section id="可視化方針" class="level3">
+<h3 class="anchored" data-anchor-id="可視化方針">可視化方針</h3>
+<p>以下では</p>
 <ol type="1">
 <li>複数カテゴリ変数を結合して生成したラベル変数をkey，出現頻度をvalueとしたデータについて，出現頻度をbar plot, 累積頻度をline plotとして可視化</li>
 <li>2つのカテゴリ次元にわたる値の頻度分布をheatmapを用いて可視化</li>
 </ol>
+<p>の２つを可視化実装を取り扱いますが，実装説明の前にEDAとしてどのようなstory-tellingが考えられるか紹介します．</p>
+<!--::: {.callout-note collapse="true" icon=false}-->
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+パレート図分析summary例
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<div id="exm-" class="custom_problem theorem example">
+<p><span class="theorem-title"><strong>Example 1.1</strong></span> <br></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 80%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>分析テーマ</td>
+<td>無数にあるように見える故障のうち，実際に対応すべきはごく一部の代表的なパターンなのではないか？</td>
+</tr>
+<tr class="even">
+<td>可視化解釈</td>
+<td>カテゴリ組み合わせは無数にあるが，Top 10だけでも異常発生件数全体の 80%をしめており，Top 10のみに集中してアクションをとるべき</td>
+</tr>
+<tr class="odd">
+<td>インサイト</td>
+<td>リソースを広く分散するのではなく，「ファン-動作不良」「HDD-認識不能」など，頻度の高いカテゴリに絞って改善策・品質対策・部品見直し・製造工程チェックを行うことが，最もコストパフォーマンスの高い改善になる</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><br></p>
+<div id="exm-" class="custom_problem theorem example">
+<p><span class="theorem-title"><strong>Example 1.2</strong></span> <br></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 80%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>分析テーマ</td>
+<td>故障カテゴリの問題があるため故障頻度分布は裾の厚い分布担っているのではないか？</td>
+</tr>
+<tr class="even">
+<td>可視化解釈</td>
+<td>カテゴリ組み合わせTop 10に絞っても累積故障割合は全体の40%を占めるにとどまっており，故障カテゴリは裾の厚い(fat-tailed)分布と見える．<br><br>故障カテゴリ分類について一部粒度が細かすぎるため裾が厚くなってしまったと仮説立て，補修アクションの観点を踏まえてカテゴリを再定義した上で集計し直したところ，Top10カテゴリで全体の約75%をカバーする構造が浮かび上がった．(=<strong>fat-tailed 分布の見え方は，分類設計そのものの歪みを示している可能性がある</strong>)</td>
+</tr>
+<tr class="odd">
+<td>インサイト</td>
+<td>故障ログの分類設計には，実際のオペレーションや対応フローとの整合性を持たせることが重要<br><br>再定義したカテゴリを標準分類とし，継続的な分析に活用できるよう設計を整備する必要性あり</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<!--::: {.callout-note collapse="true" icon=false}-->
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+heatmap分析summary例
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<div id="exm-" class="custom_problem theorem example">
+<p><span class="theorem-title"><strong>Example 1.3</strong></span> <br></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 80%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>分析テーマ</td>
+<td>故障箇所 × 故障内容の組み合わせ頻度に偏りが存在するかを確認し，重点対応すべきカテゴリを特定する</td>
+</tr>
+<tr class="even">
+<td>可視化解釈</td>
+<td>故障箇所と故障内容の組み合わせを2軸にとったヒートマップを作成したところ，特定のパターンに件数が極端に集中している構造が明らかになった<br><br>たとえば，「HDD × 認識不能」や「ファン × 動作不良」といった一部の組み合わせセルが強調され，その他多くのセルが極端に件数の少ない状態であることから，故障パターンが限定的であることが視覚的に示された</td>
+</tr>
+<tr class="odd">
+<td>インサイト</td>
+<td>故障は一見バラバラに発生しているようでいて，実際には限られた数の典型的パターンに集中的に発生している</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><br></p>
+<div id="exm-" class="custom_problem theorem example">
+<p><span class="theorem-title"><strong>Example 1.4</strong></span> <br></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 80%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>分析テーマ</td>
+<td>故障箇所 × 故障内容の組み合わせの中で，一見目立たないが相対的に異常頻度が高い“隠れホットスポット”を可視化する</td>
+</tr>
+<tr class="even">
+<td>可視化解釈</td>
+<td>故障ログ全体をヒートマップで俯瞰した結果，全体件数では上位に入らないカテゴリの中にも，特定の故障内容に偏った異常発生が集中している箇所があることが明らかになった<br><br>「電源ユニット × 異音」や「メモリ × 接触不良」など，ランキングでは目立たないものの，他の故障内容と比較すると明らかに“浮いている”セルが存在していた</td>
+</tr>
+<tr class="odd">
+<td>インサイト</td>
+<td>今後のモニタリングでは，件数が少なくても極端な偏りを示す“異常に濃いセル”をトリガーに，点検対象の見直しやアラート条件の再設計を検討すべき</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
 </section>
-<section id="可視化方針1-bar-plot-line-plot" class="level2">
-<h2 class="anchored" data-anchor-id="可視化方針1-bar-plot-line-plot">可視化方針1: bar plot + line plot</h2>
+</section>
+<section id="可視化実装1-パレート図" class="level2">
+<h2 class="anchored" data-anchor-id="可視化実装1-パレート図">可視化実装1: パレート図</h2>
 <p><strong> ▶&nbsp; 前処理</strong></p>
 <p>出現頻度のカラムを用いて事前に <code>descending sort</code> を以下のように実施します．</p>
-<div id="e2011c53" class="cell" data-execution_count="2">
+<div id="d8bc4613" class="cell" data-execution_count="2">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df_sorted <span class="op">=</span> df.sort_values(by<span class="op">=</span><span class="st">"count"</span>, ascending<span class="op">=</span><span class="va">False</span>).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
@@ -569,7 +708,7 @@ require(['plotly'], function(Plotly) {
 </tbody>
 </table>
 <p><br> <strong> ▶&nbsp; <code>Plotly</code> を用いた可視化</strong></p>
-<div id="ed4bc908" class="cell" data-execution_count="3">
+<div id="49506e57" class="cell" data-execution_count="3">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.graph_objects <span class="im">as</span> go</span>
@@ -588,7 +727,7 @@ require(['plotly'], function(Plotly) {
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    figure_title: <span class="bu">str</span> <span class="op">=</span> <span class="st">""</span>,</span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> go.Figure:</span>
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">    - カテゴリごとの件数を棒グラフで、累積値（例：累積パーセンテージ）を折れ線グラフで可視化するPlotly図を生成</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">    - カテゴリごとの件数を棒グラフで，累積値（例：累積パーセンテージ）を折れ線グラフで可視化するPlotly図を生成</span></span>
 <span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">    - cumulative plotが正しく動作するには，データが適切にソートされている必要がある</span></span>
 <span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
 <span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># create bar trace</span></span>
@@ -640,7 +779,7 @@ require(['plotly'], function(Plotly) {
 </details>
 </div>
 <p>実行コードは以下，</p>
-<div id="ae4fec72" class="cell" data-execution_count="4">
+<div id="90749473" class="cell" data-execution_count="4">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plot_category_frequency_plotly(</span>
@@ -658,9 +797,9 @@ require(['plotly'], function(Plotly) {
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<div>                            <div id="2f08225f-936c-4095-a750-d5cfa7d8def7" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("2f08225f-936c-4095-a750-d5cfa7d8def7")) {                    Plotly.newPlot(                        "2f08225f-936c-4095-a750-d5cfa7d8def7",                        [{"marker":{"color":"#6699CC"},"name":"\u4ef6\u6570","x":["\u30cf\u30fc\u30c9\u30c7\u30a3\u30b9\u30af-\u63a5\u7d9a\u4e0d\u826f","\u96fb\u6e90\u30e6\u30cb\u30c3\u30c8-\u96fb\u6e90\u4e0d\u826f","\u30cf\u30fc\u30c9\u30c7\u30a3\u30b9\u30af-\u7570\u97f3","\u30e1\u30e2\u30ea-\u8d77\u52d5\u4e0d\u826f","\u6db2\u6676\u30c7\u30a3\u30b9\u30d7\u30ec\u30a4-\u753b\u9762\u4e0d\u8a8d\u8b58","\u96fb\u6e90\u30e6\u30cb\u30c3\u30c8-\u96fb\u6e90\u4e0d\u5b89\u5b9a","\u30bd\u30d5\u30c8\u30a6\u30a7\u30a2-\u30a2\u30d7\u30ea\u5f37\u5236\u7d42\u4e86","\u30e1\u30e2\u30ea-\u30d6\u30eb\u30fc\u30b9\u30af\u30ea\u30fc\u30f3","\u30bd\u30d5\u30c8\u30a6\u30a7\u30a2-\u8d77\u52d5\u6642\u30a8\u30e9\u30fc","\u30d5\u30a1\u30f3-\u7570\u97f3","\u30de\u30b6\u30fc\u30dc\u30fc\u30c9-\u63a5\u7d9a\u4e0d\u826f","\u6db2\u6676\u30c7\u30a3\u30b9\u30d7\u30ec\u30a4-\u8868\u793a\u30c8\u30e9\u30d6\u30eb"],"y":[125,91,87,73,70,64,58,52,49,40,38,33],"yaxis":"y","type":"bar"},{"line":{"color":"#000000","dash":"dot"},"mode":"lines+markers","name":"\u7d2f\u7a4d\u5272\u5408","x":["\u30cf\u30fc\u30c9\u30c7\u30a3\u30b9\u30af-\u63a5\u7d9a\u4e0d\u826f","\u96fb\u6e90\u30e6\u30cb\u30c3\u30c8-\u96fb\u6e90\u4e0d\u826f","\u30cf\u30fc\u30c9\u30c7\u30a3\u30b9\u30af-\u7570\u97f3","\u30e1\u30e2\u30ea-\u8d77\u52d5\u4e0d\u826f","\u6db2\u6676\u30c7\u30a3\u30b9\u30d7\u30ec\u30a4-\u753b\u9762\u4e0d\u8a8d\u8b58","\u96fb\u6e90\u30e6\u30cb\u30c3\u30c8-\u96fb\u6e90\u4e0d\u5b89\u5b9a","\u30bd\u30d5\u30c8\u30a6\u30a7\u30a2-\u30a2\u30d7\u30ea\u5f37\u5236\u7d42\u4e86","\u30e1\u30e2\u30ea-\u30d6\u30eb\u30fc\u30b9\u30af\u30ea\u30fc\u30f3","\u30bd\u30d5\u30c8\u30a6\u30a7\u30a2-\u8d77\u52d5\u6642\u30a8\u30e9\u30fc","\u30d5\u30a1\u30f3-\u7570\u97f3","\u30de\u30b6\u30fc\u30dc\u30fc\u30c9-\u63a5\u7d9a\u4e0d\u826f","\u6db2\u6676\u30c7\u30a3\u30b9\u30d7\u30ec\u30a4-\u8868\u793a\u30c8\u30e9\u30d6\u30eb"],"y":[0.16025641025641027,0.27692307692307694,0.38846153846153847,0.48205128205128206,0.5717948717948718,0.6538461538461539,0.7282051282051282,0.7948717948717948,0.8576923076923076,0.908974358974359,0.9576923076923077,1.0],"yaxis":"y2","type":"scatter"}],                        {"legend":{"orientation":"v","x":1.05,"y":1.0},"margin":{"t":50},"title":{"text":"PC Faulty component frequency","x":0.0,"xanchor":"left","yanchor":"top"},"xaxis":{"tickangle":45,"title":{"text":"Faulty Category"}},"yaxis":{"title":{"text":"Frequency"},"gridcolor":"#EFF5F5"},"yaxis2":{"gridcolor":"#EFF5F5","overlaying":"y","range":[0,1.1],"side":"right","title":{"text":"Cumulative Percentage"}},"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30}}},"plot_bgcolor":"#EFF5F5"},                        {"responsive": true}                    ).then(function(){
+<div>                            <div id="b0f6522f-290b-4800-bd15-9e93e01ead8c" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("b0f6522f-290b-4800-bd15-9e93e01ead8c")) {                    Plotly.newPlot(                        "b0f6522f-290b-4800-bd15-9e93e01ead8c",                        [{"marker":{"color":"#6699CC"},"name":"\u4ef6\u6570","x":["\u30cf\u30fc\u30c9\u30c7\u30a3\u30b9\u30af-\u63a5\u7d9a\u4e0d\u826f","\u96fb\u6e90\u30e6\u30cb\u30c3\u30c8-\u96fb\u6e90\u4e0d\u826f","\u30cf\u30fc\u30c9\u30c7\u30a3\u30b9\u30af-\u7570\u97f3","\u30e1\u30e2\u30ea-\u8d77\u52d5\u4e0d\u826f","\u6db2\u6676\u30c7\u30a3\u30b9\u30d7\u30ec\u30a4-\u753b\u9762\u4e0d\u8a8d\u8b58","\u96fb\u6e90\u30e6\u30cb\u30c3\u30c8-\u96fb\u6e90\u4e0d\u5b89\u5b9a","\u30bd\u30d5\u30c8\u30a6\u30a7\u30a2-\u30a2\u30d7\u30ea\u5f37\u5236\u7d42\u4e86","\u30e1\u30e2\u30ea-\u30d6\u30eb\u30fc\u30b9\u30af\u30ea\u30fc\u30f3","\u30bd\u30d5\u30c8\u30a6\u30a7\u30a2-\u8d77\u52d5\u6642\u30a8\u30e9\u30fc","\u30d5\u30a1\u30f3-\u7570\u97f3","\u30de\u30b6\u30fc\u30dc\u30fc\u30c9-\u63a5\u7d9a\u4e0d\u826f","\u6db2\u6676\u30c7\u30a3\u30b9\u30d7\u30ec\u30a4-\u8868\u793a\u30c8\u30e9\u30d6\u30eb"],"y":[125,91,87,73,70,64,58,52,49,40,38,33],"yaxis":"y","type":"bar"},{"line":{"color":"#000000","dash":"dot"},"mode":"lines+markers","name":"\u7d2f\u7a4d\u5272\u5408","x":["\u30cf\u30fc\u30c9\u30c7\u30a3\u30b9\u30af-\u63a5\u7d9a\u4e0d\u826f","\u96fb\u6e90\u30e6\u30cb\u30c3\u30c8-\u96fb\u6e90\u4e0d\u826f","\u30cf\u30fc\u30c9\u30c7\u30a3\u30b9\u30af-\u7570\u97f3","\u30e1\u30e2\u30ea-\u8d77\u52d5\u4e0d\u826f","\u6db2\u6676\u30c7\u30a3\u30b9\u30d7\u30ec\u30a4-\u753b\u9762\u4e0d\u8a8d\u8b58","\u96fb\u6e90\u30e6\u30cb\u30c3\u30c8-\u96fb\u6e90\u4e0d\u5b89\u5b9a","\u30bd\u30d5\u30c8\u30a6\u30a7\u30a2-\u30a2\u30d7\u30ea\u5f37\u5236\u7d42\u4e86","\u30e1\u30e2\u30ea-\u30d6\u30eb\u30fc\u30b9\u30af\u30ea\u30fc\u30f3","\u30bd\u30d5\u30c8\u30a6\u30a7\u30a2-\u8d77\u52d5\u6642\u30a8\u30e9\u30fc","\u30d5\u30a1\u30f3-\u7570\u97f3","\u30de\u30b6\u30fc\u30dc\u30fc\u30c9-\u63a5\u7d9a\u4e0d\u826f","\u6db2\u6676\u30c7\u30a3\u30b9\u30d7\u30ec\u30a4-\u8868\u793a\u30c8\u30e9\u30d6\u30eb"],"y":[0.16025641025641027,0.27692307692307694,0.38846153846153847,0.48205128205128206,0.5717948717948718,0.6538461538461539,0.7282051282051282,0.7948717948717948,0.8576923076923076,0.908974358974359,0.9576923076923077,1.0],"yaxis":"y2","type":"scatter"}],                        {"legend":{"orientation":"v","x":1.05,"y":1.0},"margin":{"t":50},"title":{"text":"PC Faulty component frequency","x":0.0,"xanchor":"left","yanchor":"top"},"xaxis":{"tickangle":45,"title":{"text":"Faulty Category"}},"yaxis":{"title":{"text":"Frequency"},"gridcolor":"#EFF5F5"},"yaxis2":{"gridcolor":"#EFF5F5","overlaying":"y","range":[0,1.1],"side":"right","title":{"text":"Cumulative Percentage"}},"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30}}},"plot_bgcolor":"#EFF5F5"},                        {"responsive": true}                    ).then(function(){
                             
-var gd = document.getElementById('2f08225f-936c-4095-a750-d5cfa7d8def7');
+var gd = document.getElementById('b0f6522f-290b-4800-bd15-9e93e01ead8c');
 var x = new MutationObserver(function (mutations, observer) {{
         var display = window.getComputedStyle(gd).display;
         if (!display || display === 'none') {{
@@ -686,7 +825,7 @@ if (outputEl) {{
 </div>
 </div>
 <p><br> <strong> ▶&nbsp; <code>matplotlib</code> を用いた可視化</strong></p>
-<div id="4dc11729" class="cell" data-execution_count="5">
+<div id="b47658d9" class="cell" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -744,7 +883,7 @@ if (outputEl) {{
 </details>
 </div>
 <p>実行コードは以下，</p>
-<div id="d8cde083" class="cell" data-execution_count="6">
+<div id="cd06a9b5" class="cell" data-execution_count="6">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> regmonkey_style <span class="im">import</span> stylewizard <span class="im">as</span> sw</span>
@@ -776,8 +915,8 @@ if (outputEl) {{
 </div>
 </div>
 </section>
-<section id="可視化方針2-heatmap" class="level2">
-<h2 class="anchored" data-anchor-id="可視化方針2-heatmap">可視化方針2: heatmap</h2>
+<section id="可視化実装2-heatmap" class="level2">
+<h2 class="anchored" data-anchor-id="可視化実装2-heatmap">可視化実装2: heatmap</h2>
 <ul>
 <li>ここでは，xaxis, yaxisとなる２つのカテゴリ変数を用いてpivot tableを作成し，それをheatmapで可視化</li>
 <li>pivotにあたっての集計関数は <code>sum</code> を用いる</li>
@@ -785,7 +924,7 @@ if (outputEl) {{
 <li><code>"PuBu"</code> カラースケールを使用</li>
 </ul>
 <p><strong> ▶&nbsp; 実装</strong></p>
-<div id="fd325188" class="cell" data-execution_count="7">
+<div id="037b756b" class="cell" data-execution_count="7">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
@@ -851,7 +990,7 @@ if (outputEl) {{
 </details>
 </div>
 <p><strong> ▶&nbsp; <code>Plotly</code> による可視化</strong></p>
-<div id="8f796c7a" class="cell" data-execution_count="8">
+<div id="7ab2e775" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> heatmap_frequency(</span>
@@ -875,9 +1014,9 @@ if (outputEl) {{
 <span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<div>                            <div id="39f278d7-471d-41ec-9d94-39bcf770fb1c" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("39f278d7-471d-41ec-9d94-39bcf770fb1c")) {                    Plotly.newPlot(                        "39f278d7-471d-41ec-9d94-39bcf770fb1c",                        [{"colorscale":[[0.0,"rgb(255,247,251)"],[0.125,"rgb(236,231,242)"],[0.25,"rgb(208,209,230)"],[0.375,"rgb(166,189,219)"],[0.5,"rgb(116,169,207)"],[0.625,"rgb(54,144,192)"],[0.75,"rgb(5,112,176)"],[0.875,"rgb(4,90,141)"],[1.0,"rgb(2,56,88)"]],"x":["\u30a2\u30d7\u30ea\u5f37\u5236\u7d42\u4e86","\u30d6\u30eb\u30fc\u30b9\u30af\u30ea\u30fc\u30f3","\u63a5\u7d9a\u4e0d\u826f","\u753b\u9762\u4e0d\u8a8d\u8b58","\u7570\u97f3","\u8868\u793a\u30c8\u30e9\u30d6\u30eb","\u8d77\u52d5\u4e0d\u826f","\u8d77\u52d5\u6642\u30a8\u30e9\u30fc","\u96fb\u6e90\u4e0d\u5b89\u5b9a","\u96fb\u6e90\u4e0d\u826f"],"y":["\u30bd\u30d5\u30c8\u30a6\u30a7\u30a2","\u30cf\u30fc\u30c9\u30c7\u30a3\u30b9\u30af","\u30d5\u30a1\u30f3","\u30de\u30b6\u30fc\u30dc\u30fc\u30c9","\u30e1\u30e2\u30ea","\u6db2\u6676\u30c7\u30a3\u30b9\u30d7\u30ec\u30a4","\u96fb\u6e90\u30e6\u30cb\u30c3\u30c8"],"z":[[58.0,0.0,0.0,0.0,0.0,0.0,0.0,49.0,0.0,0.0],[0.0,0.0,125.0,0.0,87.0,0.0,0.0,0.0,0.0,0.0],[0.0,0.0,0.0,0.0,40.0,0.0,0.0,0.0,0.0,0.0],[0.0,0.0,38.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],[0.0,52.0,0.0,0.0,0.0,0.0,73.0,0.0,0.0,0.0],[0.0,0.0,0.0,70.0,0.0,33.0,0.0,0.0,0.0,0.0],[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,64.0,91.0]],"type":"heatmap"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"family":"IPAexGothic"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30}}},"title":{"font":{"size":18},"text":"\u6545\u969c\u5206\u5e03","automargin":true,"x":0.5,"y":0.95,"xanchor":"center"},"xaxis":{"title":{"text":"\u6545\u969c\u30ab\u30c6\u30b4\u30ea"}},"yaxis":{"title":{"text":"\u6545\u969c\u7b87\u6240"}}},                        {"responsive": true}                    ).then(function(){
+<div>                            <div id="5ce2086f-9602-4059-b83e-0fe9d6b7ebd8" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("5ce2086f-9602-4059-b83e-0fe9d6b7ebd8")) {                    Plotly.newPlot(                        "5ce2086f-9602-4059-b83e-0fe9d6b7ebd8",                        [{"colorscale":[[0.0,"rgb(255,247,251)"],[0.125,"rgb(236,231,242)"],[0.25,"rgb(208,209,230)"],[0.375,"rgb(166,189,219)"],[0.5,"rgb(116,169,207)"],[0.625,"rgb(54,144,192)"],[0.75,"rgb(5,112,176)"],[0.875,"rgb(4,90,141)"],[1.0,"rgb(2,56,88)"]],"x":["\u30a2\u30d7\u30ea\u5f37\u5236\u7d42\u4e86","\u30d6\u30eb\u30fc\u30b9\u30af\u30ea\u30fc\u30f3","\u63a5\u7d9a\u4e0d\u826f","\u753b\u9762\u4e0d\u8a8d\u8b58","\u7570\u97f3","\u8868\u793a\u30c8\u30e9\u30d6\u30eb","\u8d77\u52d5\u4e0d\u826f","\u8d77\u52d5\u6642\u30a8\u30e9\u30fc","\u96fb\u6e90\u4e0d\u5b89\u5b9a","\u96fb\u6e90\u4e0d\u826f"],"y":["\u30bd\u30d5\u30c8\u30a6\u30a7\u30a2","\u30cf\u30fc\u30c9\u30c7\u30a3\u30b9\u30af","\u30d5\u30a1\u30f3","\u30de\u30b6\u30fc\u30dc\u30fc\u30c9","\u30e1\u30e2\u30ea","\u6db2\u6676\u30c7\u30a3\u30b9\u30d7\u30ec\u30a4","\u96fb\u6e90\u30e6\u30cb\u30c3\u30c8"],"z":[[58.0,0.0,0.0,0.0,0.0,0.0,0.0,49.0,0.0,0.0],[0.0,0.0,125.0,0.0,87.0,0.0,0.0,0.0,0.0,0.0],[0.0,0.0,0.0,0.0,40.0,0.0,0.0,0.0,0.0,0.0],[0.0,0.0,38.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],[0.0,52.0,0.0,0.0,0.0,0.0,73.0,0.0,0.0,0.0],[0.0,0.0,0.0,70.0,0.0,33.0,0.0,0.0,0.0,0.0],[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,64.0,91.0]],"type":"heatmap"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"family":"IPAexGothic"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30}}},"title":{"font":{"size":18},"text":"\u6545\u969c\u5206\u5e03","automargin":true,"x":0.5,"y":0.95,"xanchor":"center"},"xaxis":{"title":{"text":"\u6545\u969c\u30ab\u30c6\u30b4\u30ea"}},"yaxis":{"title":{"text":"\u6545\u969c\u7b87\u6240"}}},                        {"responsive": true}                    ).then(function(){
                             
-var gd = document.getElementById('39f278d7-471d-41ec-9d94-39bcf770fb1c');
+var gd = document.getElementById('5ce2086f-9602-4059-b83e-0fe9d6b7ebd8');
 var x = new MutationObserver(function (mutations, observer) {{
         var display = window.getComputedStyle(gd).display;
         if (!display || display === 'none') {{
@@ -903,7 +1042,7 @@ if (outputEl) {{
 </div>
 </div>
 <p><strong> ▶&nbsp; <code>matplotlib</code> による可視化</strong></p>
-<div id="9f368633" class="cell" data-execution_count="9">
+<div id="0228ae55" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> heatmap_frequency(</span>

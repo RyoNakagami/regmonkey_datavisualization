@@ -38,6 +38,7 @@ book:
         href: LICENSE
   chapters:
     - index.qmd
+    - posts/introduction.qmd
     - part: posts/1D-datavisualization/chapter-header.qmd
       chapters:
         - posts/1D-datavisualization/frequency-counts-of-data-with-bar-plot.qmd

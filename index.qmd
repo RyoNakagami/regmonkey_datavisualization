@@ -21,28 +21,9 @@ code-fold: true
 |[statistics dojo](https://ryonakagami.github.io/statistics_dojo/)|統計学基礎問題練習ノート, Rを主に扱う|
 
 
-### What is Data Visualization about?
+### 技術スペック
 
-良いデータ可視化は，統計分析と可視化デザインの２つの能力に基づいています．
-
-- 統計分析能力がない可視化デザインは，単なる様式美の提供にとどまり
-- 可視化デザイン能力が伴わない統計分析は単なる分析，データ探索にとなります
-
-両方のスキルを適切に組み合わせることによって，データ探索とstory-tellingが結びついて，データの理解を目的とする科学的なコミュニケーションとなります．
-
-<strong > &#9654;&nbsp; Dataとはなにか？</strong>
-
-Dataとは，スプレッドシートやカンマ区切りのレコードの集合といったコンピュター上での存在形式を指すのではなく，一義的には「世界の断面を記録したもの」です．
-
-<strong > &#9654;&nbsp; Rules vs Suggestions</strong>
-
-bar chartなりscatter plotなり，読み手がデータについて正確な解釈をすることができる可視化でなければならない，というのはデータ可視化のルールの１つです．
-一方，axisのスケールなどは科学分野ではScientific Notation(例: $-1.602\times 10^{-19}$)を用いるべきなど，コミュニケーションの場面に応じて推奨が変わってきます．
-
-「余分な情報は削ぎ落とせ」と上司からコメントをもらったとしても，なにが余分な情報なのかは場面によって異なります．そのため，なにがRulesでなにがSuggestionなのかを区別する習慣が重要になります．
-
-
-<strong > &#9654;&nbsp; 可視化で用いるプログラミング言語</strong>
+<br><strong > &#9654;&nbsp; 可視化で用いるプログラミング言語</strong>
 
 - 主にPython 3.12.9 + [poetry](https://python-poetry.org/) を用います
 - 分析コードは[Repository](<repository url>)のqmdファイルがそのままソースコードとなっています

@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ryo Nakagami">
-<meta name="dcterms.date" content="2025-01-07">
+<meta name="dcterms.date" content="2025-07-23">
 
-<title>Introduction – Data Visualization for Regression Monkeys</title>
+<title>1&nbsp; Meiryo fontのセットアップ – Data Visualization for Regression Monkeys</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,33 +22,68 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<link href="../posts/eda-setup/chapter-header.html" rel="next">
-<link href="../index.html" rel="prev">
-<link href=".././img/favicon.ico" rel="icon">
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-2fef5ea3f8957b3e4ecc936fc74692ca.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-573f401c18ac87487c003c8bb5689b85.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-338fb44f2e9297c6accdd2699a6e07b0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-573f401c18ac87487c003c8bb5689b85.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../posts/visualization-components/chapter-header.html" rel="next">
+<link href="../../posts/eda-setup/chapter-header.html" rel="prev">
+<link href="../.././img/favicon.ico" rel="icon">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-2fef5ea3f8957b3e4ecc936fc74692ca.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-573f401c18ac87487c003c8bb5689b85.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-338fb44f2e9297c6accdd2699a6e07b0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-573f401c18ac87487c003c8bb5689b85.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -103,35 +138,6 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
     };
 </script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -306,7 +312,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../posts/introduction.html">Introduction</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/eda-setup/chapter-header.html">データ可視化の20 Rules</a></li><li class="breadcrumb-item"><a href="../../posts/eda-setup/font-setup.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Meiryo fontのセットアップ</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -321,7 +327,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">Data Visualization for Regression Monkeys</a> 
+      <a href="../../">Data Visualization for Regression Monkeys</a> 
         <div class="sidebar-tools-main tools-wide">
     <div class="dropdown">
       <a href="" title="Blog Series" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Blog Series"><i class="bi bi-book"></i></a>
@@ -348,7 +354,7 @@ window.Quarto = {
           </li>
       </ul>
     </div>
-    <a href="../index.xml" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-rss"></i></a>
+    <a href="../../index.xml" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-rss"></i></a>
     <a href="https://github.com/RyoNakagami/regmonkey_datavisualization" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <a href="https://twitter.com/intent/tweet?url=|url|" title="Twitter" class="quarto-navigation-tool px-1" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
@@ -364,19 +370,19 @@ window.Quarto = {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Welcome</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../posts/introduction.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../posts/introduction.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Introduction</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../posts/eda-setup/chapter-header.html" class="sidebar-item-text sidebar-link">
+            <a href="../../posts/eda-setup/chapter-header.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">データ可視化の20 Rules</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -385,7 +391,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../posts/eda-setup/font-setup.html" class="sidebar-item-text sidebar-link">
+  <a href="../../posts/eda-setup/font-setup.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Meiryo fontのセットアップ</span></span></a>
   </div>
 </li>
@@ -393,7 +399,7 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../posts/visualization-components/chapter-header.html" class="sidebar-item-text sidebar-link">
+            <a href="../../posts/visualization-components/chapter-header.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">可視化オブジェクトのComponents</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -402,7 +408,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../posts/visualization-components/legends.html" class="sidebar-item-text sidebar-link">
+  <a href="../../posts/visualization-components/legends.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Legends(凡例)</span></span></a>
   </div>
 </li>
@@ -410,7 +416,7 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../posts/1D-datavisualization/chapter-header.html" class="sidebar-item-text sidebar-link">
+            <a href="../../posts/1D-datavisualization/chapter-header.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">1次元データ</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -419,7 +425,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../posts/1D-datavisualization/frequency-counts-of-data-with-bar-plot.html" class="sidebar-item-text sidebar-link">
+  <a href="../../posts/1D-datavisualization/frequency-counts-of-data-with-bar-plot.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">質的データの出現頻度</span></span></a>
   </div>
 </li>
@@ -431,7 +437,7 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../posts/comparison-of-groups/chapter-header.html" class="sidebar-item-text sidebar-link">
+            <a href="../../posts/comparison-of-groups/chapter-header.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">グループ間の比較</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -440,7 +446,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../posts/comparison-of-groups/categorical-group-ratios-with-stacked-bar-plot.html" class="sidebar-item-text sidebar-link">
+  <a href="../../posts/comparison-of-groups/categorical-group-ratios-with-stacked-bar-plot.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">グループ間の割合差分</span></span></a>
   </div>
 </li>
@@ -456,20 +462,23 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#良い可視化とは" id="toc-良い可視化とは" class="nav-link active" data-scroll-target="#良い可視化とは">良い可視化とは?</a>
+  <li><a href="#linux環境でのmeiryo-font設定" id="toc-linux環境でのmeiryo-font設定" class="nav-link active" data-scroll-target="#linux環境でのmeiryo-font設定">Linux環境でのMeiryo Font設定</a></li>
+  <li><a href="#meiryoフォントを用いた可視化" id="toc-meiryoフォントを用いた可視化" class="nav-link" data-scroll-target="#meiryoフォントを用いた可視化">Meiryoフォントを用いた可視化</a>
   <ul class="collapse">
-  <li><a href="#可視化パッケージとstory-tellingの違い" id="toc-可視化パッケージとstory-tellingの違い" class="nav-link" data-scroll-target="#可視化パッケージとstory-tellingの違い">可視化パッケージとstory-tellingの違い</a></li>
+  <li><a href="#plotly" id="toc-plotly" class="nav-link" data-scroll-target="#plotly">Plotly</a></li>
+  <li><a href="#matplotlib" id="toc-matplotlib" class="nav-link" data-scroll-target="#matplotlib">Matplotlib</a></li>
   </ul></li>
+  <li><a href="#sources" id="toc-sources" class="nav-link" data-scroll-target="#sources">Sources</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/regmonkey_datavisualization/edit/main/posts/introduction.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/regmonkey_datavisualization/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/regmonkey_datavisualization/edit/main/posts/eda-setup/font-setup.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/regmonkey_datavisualization/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/eda-setup/chapter-header.html">データ可視化の20 Rules</a></li><li class="breadcrumb-item"><a href="../../posts/eda-setup/font-setup.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Meiryo fontのセットアップ</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Introduction</h1>
+<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Meiryo fontのセットアップ</span></h1>
 </div>
 
 
@@ -486,7 +495,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2025-01-07</p>
+      <p class="date">2025-07-23</p>
     </div>
   </div>
   
@@ -504,38 +513,93 @@ window.Quarto = {
 </header>
 
 
-<section id="良い可視化とは" class="level2">
-<h2 class="anchored" data-anchor-id="良い可視化とは">良い可視化とは?</h2>
-<div class="blog-custom-border" style="margin-top: 1rem; margin-bottom: 1rem;">
-<div id="def-" class="custom_problem theorem definition">
-<p><span class="theorem-title"><strong>Definition 1</strong></span> <strong>: 可視化</strong> <br></p>
-<p>データの構造・傾向・異常などを人が視覚的に理解できる形に変換する工程のことを可視化と呼ぶ．</p>
+<section id="linux環境でのmeiryo-font設定" class="level2">
+<h2 class="anchored" data-anchor-id="linux環境でのmeiryo-font設定">Linux環境でのMeiryo Font設定</h2>
+<p>Linux OSの場合，<code>.local/share/fonts</code>以下に以下のMeiryoフォントをインストールします．</p>
+<div class="no-border-top-table">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 26%">
+<col style="width: 53%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Fonts</th>
+<th>File</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Meiryo</td>
+<td><code>meiryo.ttc</code></td>
+<td>Meiryo UI Regular, Meiryo UI Italic, Meiryo Regular, Meiryo Italic</td>
+</tr>
+<tr class="even">
+<td></td>
+<td><code>meiryob.ttc</code></td>
+<td>Meiryo UI Bold, Meiryo UI Bold Italic, Meiryo Bold, Meiryo Bold Italic</td>
+</tr>
+</tbody>
+</table>
 </div>
-</div>
-<p>良いデータ可視化は，統計分析と可視化デザインの２つの能力に基づいています．</p>
+<p><span class="mini-section">環境要件</span></p>
 <ul>
-<li>統計分析能力がない可視化デザインは，単なる様式美の提供にとどまり</li>
-<li>可視化デザイン能力が伴わない統計分析は単なる分析，データ探索にとなります</li>
+<li>Linux operating system(Ubuntuを含む)</li>
+<li><code>fc-cache</code> コマンド
+<ul>
+<li>MacOsで実行する場合は, <code>brew install ricty</code> を実行することで<code>fc-cache</code> コマンドが利用可能になります</li>
+</ul></li>
 </ul>
-<p>両方のスキルを適切に組み合わせることによって，データ探索とstory-tellingが結びついて，データの理解を目的とする科学的なコミュニケーションとなります．</p>
-<p><strong> ▶&nbsp; Dataとはなにか？</strong></p>
-<p>Dataとは，スプレッドシートやカンマ区切りのレコードの集合といったコンピュター上での存在形式を指すのではなく，一義的には「世界の断面を記録したもの」です．</p>
-<p><strong> ▶&nbsp; Rules vs Suggestions</strong></p>
-<p>bar chartなりscatter plotなり，読み手がデータについて正確な解釈をすることができる可視化でなければならない，というのはデータ可視化のルールの１つです． 一方，axisのスケールなどは科学分野ではScientific Notation(例: <span class="math inline">\(-1.602\times 10^{-19}\)</span>)を用いるべきなど，コミュニケーションの場面に応じて推奨が変わってきます．</p>
-<p>「余分な情報は削ぎ落とせ」と上司からコメントをもらったとしても，なにが余分な情報なのかは場面によって異なります．そのため，なにがRulesでなにがSuggestionなのかを区別する習慣が重要になります．</p>
-<section id="可視化パッケージとstory-tellingの違い" class="level3">
-<h3 class="anchored" data-anchor-id="可視化パッケージとstory-tellingの違い">可視化パッケージとstory-tellingの違い</h3>
-<p><strong>データを用いたstory-telling</strong>という活動の中の一つの工程として<strong>「データの構造やパターンを見やすくする」可視化</strong>が存在します．その可視化工程の便利ツールとして<code>matplotlib</code>, <code>plotly</code>, <code>ggplot</code> といった可視化パッケージが存在します． 可視化パッケージは可視化手法に関する文法(grammer)がユーザーフレンドリーな形で実装で実装されており，それらを使いこなすことで自分が伝えたい内容を上手く可視化オブジェクト(<code>scatter plot</code>, <code>line plot</code>, <code>heatmap</code>, etc.,)として出力することができます．</p>
-<p>一方，可視化パッケージを利用するにあたって，以下のポイントを常に忘れないようにしましょう</p>
-<ol type="1">
-<li>可視化パッケージを使って出力されたものは，あくまでユーザーが指定したものに対応したオブジェクトであって，それ自体が<strong>データを用いたstory-telling</strong>になるわけではない</li>
-<li>可視化パッケージを使いこなしたとしても，その可視化オブジェクトスペース（表現幅）は可視化パッケージごとに規程されてしまうため，ユーザーが描きたい可視化オブジェクトは必ずしも描けるとは限らない</li>
-</ol>
-<p><strong> ▶&nbsp; 可視化パッケージオブジェクト表現空間の制限</strong></p>
-<p>たとえば <code>seaborn</code> でヒストグラムを描きたいと思ったとき，指定できるオプションや見た目は，<code>seaborn</code>が提供している機能に限定されます． ユーザー操作に応じて可視化を変化させたい（インタラクティブ）場合，<code>seaborn</code>だけでは不可能で，<code>plotly</code>など別パッケージの利用などを検討する必要が有ります．</p>
-
-
+<p><span class="mini-section">手順</span></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># download repository</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/yourusername/ManualFontInstaller.git</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ManualFontInstaller</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Run script</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">./install_fonts.sh</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
+<section id="meiryoフォントを用いた可視化" class="level2">
+<h2 class="anchored" data-anchor-id="meiryoフォントを用いた可視化">Meiryoフォントを用いた可視化</h2>
+<section id="plotly" class="level3">
+<h3 class="anchored" data-anchor-id="plotly">Plotly</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.scatter(x<span class="op">=</span>[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>], y<span class="op">=</span>[<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>], title<span class="op">=</span><span class="st">"サンプルグラフ"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># X軸ラベルの追加</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>fig.update_layout(</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    xaxis_title<span class="op">=</span><span class="st">"時間（秒）"</span>,  <span class="co"># ← ここがX軸ラベル</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    font<span class="op">=</span><span class="bu">dict</span>(family<span class="op">=</span><span class="st">"Meiryo"</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="matplotlib" class="level3">
+<h3 class="anchored" data-anchor-id="matplotlib">Matplotlib</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">"font.family"</span>] <span class="op">=</span> <span class="st">"Meiryo"</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> [<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>]</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>plt.plot(x, y, marker<span class="op">=</span><span class="st">"o"</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"サンプルグラフ"</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"時間（秒）"</span>)  <span class="co"># ← ここがX軸ラベル</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"値"</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="sources" class="level2">
+<h2 class="anchored" data-anchor-id="sources">Sources</h2>
+<ul>
+<li><a href="https://github.com/RyoNakagami/ManualFontInstaller">RyoNakagami &gt; ManualFontInstaller</a></li>
+</ul>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -959,15 +1023,17 @@ window.Quarto = {
     }
   });
   </script>
+<script src="https://utteranc.es/client.js" repo="RyoNakagami/statistics-for-regression-monkey" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../index.html" class="pagination-link" aria-label="Welcome">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Welcome</span>
+      <a href="../../posts/eda-setup/chapter-header.html" class="pagination-link" aria-label="データ可視化の20 Rules">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">データ可視化の20 Rules</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../posts/eda-setup/chapter-header.html" class="pagination-link" aria-label="データ可視化の20 Rules">
-        <span class="nav-page-text">データ可視化の20 Rules</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../posts/visualization-components/chapter-header.html" class="pagination-link" aria-label="可視化オブジェクトのComponents">
+        <span class="nav-page-text">可視化オブジェクトのComponents</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -983,12 +1049,12 @@ window.Quarto = {
  © Copyright RyoNak
   </li>  
     <li class="nav-item">
-    <a class="nav-link" href="../LICENSE">
+    <a class="nav-link" href="../../LICENSE">
 <p>License</p>
 </a>
   </li>  
 </ul>
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RyoNakagami/regmonkey_datavisualization/edit/main/posts/introduction.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/regmonkey_datavisualization/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RyoNakagami/regmonkey_datavisualization/edit/main/posts/eda-setup/font-setup.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/regmonkey_datavisualization/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

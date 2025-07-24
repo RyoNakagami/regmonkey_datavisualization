@@ -1,0 +1,54 @@
+---
+title: "可視化オブジェクトのComponents"
+author: "Ryo Nakagami"
+date: "2025-07-23"
+date-modified: last-modified
+number_sections: false
+code-fold: true
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+jupyter: python3
+---
+
+## 可視化オブジェクトと可視化コンポーネント
+
+可視化は単なる「グラフ」や「図」ではなく，
+
+- Axis
+- Legends
+- Labels
+- Fonts
+
+といった様々なコンポーネントの組み合わせによって成り立っています．また，理解しやすい可視化の文脈において，これらコンポーネントはそれぞれの役割を持っています
+
+:::: {.no-border-top-table}
+
+|Components|役割|
+|----------|---|
+|Axis|軸範囲や単位、スケールの情報を伝える．|
+|Legends|データグループや要素の分類を伝える．視認性に影響．|
+|Labels|データポイントの情報を伝える．|
+|Fonts|可視化全体のトーンと読みやすさに影響．|
+
+::::
+
+これらコンポーネントについての選択の積み重ねが，最終的な可視化オブジェクトの決定に繋がります．
+
+
+::: {.callout-note}
+## REMARKS
+
+:::{style="font-size: 1.2em;"}
+
+$$
+\text{データ可視化} = \text{コンポーネント設計} \times \text{データ理解} \nonumber
+$$
+
+:::
+
+- データだけでなく，「どう見せるか」の設計が可視化の質を決める 
+- 「どう見せるか」の設計の適切さは，コンポーネントの役割と使い方を理解に依存する
+
+:::

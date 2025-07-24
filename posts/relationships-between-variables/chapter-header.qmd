@@ -1,0 +1,40 @@
+---
+title: "変数間の関係性"
+author: "Ryo Nakagami"
+date: "2024-08-15"
+date-modified: last-modified
+number_sections: false
+code-fold: true
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+jupyter: python3
+---
+
+## 変数間の関係性: correlationとconnection
+
+<div class="blog-custom-border" style="margin-top: 1rem; margin-bottom: 1rem;">
+::: {#def- .custom_problem }
+**: 多次元データ**
+<br>
+
+単一の変数 $x$ だけでなく，$(x, y, z)$ などの複数の変数を観測して，$n$ 組のデータを得る場合，そのデータを**多次元データ**と呼ぶ．
+一般に $p$ 個の変数を取り扱う場合．$p$ 次元データと呼ぶ．
+
+:::
+
+</div>
+
+$p$ 次元データを取り扱う場合，
+
+- 変数感の関係性(relation, relationship)はどのようになっているのか？
+- 一方が増えたら他方も増えるような関係性になっているのか？
+
+というEDAクエッションを明らかにしたいケースが多いと思います．変数感の関係性は一般に **変数間の相関(correlation)** という観点でをfirst stepの可視化が試みられます．
+具体的には選択した２変数のscatter plotやline plotでの可視化となります．ここでいう「変数間の相関」はPearson相関係数のみを指すのではなく，
+
+- 一方の変数が変化したとき，もう一方の変数の変化はどのような傾向があるのか？
+
+という幅広い概念です．また，変数間の関係性は相関だけでなく，個々のdata pointsがどのようにリンクしているのか？という **変数感のつながり(connection)** の可視化も試みられたりします．
+具体的にはネットワークグラフの可視化などが該当します．

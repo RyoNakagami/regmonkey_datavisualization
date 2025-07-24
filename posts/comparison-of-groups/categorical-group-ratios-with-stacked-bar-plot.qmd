@@ -1,0 +1,227 @@
+---
+title: "グループ間の割合差分"
+jupyter: python3
+author: "Ryo Nakagami"
+date: "2025-06-06"
+date-modified: last-modified
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+# when you run this file locally, do not forget to run poetry shell
+---
+
+## 問題設定
+
+[Data]{.mini-section}
+
+```{python}
+#| label: tbl-us-commute
+#| tbl-cap: U.S. modes of tranportation to commute 
+import pandas as pd
+
+data = {
+    '2024': [0.72, 0.10, 0.05, 0.03, 0.02, 0.03, 0.015, 0.01], # 'Public transportation'はn/aのためNaN
+    '2019': [0.85, 0.12, 0.09, 0.06, 0.05, 0.04, 0.03, 0.02]
+}
+
+index = [
+    'Own car',
+    'Public transportation',
+    'Walking',
+    'Own bike',
+    'Ride hailing',
+    'Car sharing',
+    'Taxi',
+    'Motorcycle'
+]
+
+df = pd.DataFrame(data, index=index).sort_values(by='2024')
+df
+```
+
+
+
+[Key message]{.mini-section}
+
+- 2020コロナ流行という生活スタイル激変イベントがあったにも関わらず、人々の日常交通手段は依然として車が中心的
+
+## 可視化方針
+
+::: {.callout-note}
+
+### Objectives
+
+:::{.regmonkey-approach}
+
+- 2019年と2024年の2つの時点における交通手段の利用状況（利用割合）を車利用者割合2019 vs 車利用者割合2024というApple-to-Appleで比較しやすくする
+- 時間の経過とともに各交通手段の利用率がどのように変化したかを把握しやすくしたい
+
+:::
+
+:::
+
+### 方針検討
+
+- 移動手段というカテゴリカルデータ(value同士に順序性はない)
+- 人間の目は左上からz文字の順番で情報を処理する傾向がある
+- 自家所有者(Own car)を左に見てから，目線が右に移動し，2019 vs 2024で比較するのが自然な流れ(=数値水準を確認する前にその数値がどのカテゴリーのものなのかを自然な流れで見てもらえる)
+- 2019年と2024年ともに自家用車がメインの交通手段であることを伝えたいので，カテゴリーは2019年の利用割合でソートする
+
+::: {.callout-note}
+
+### REMARKS
+
+:::{.regmonkey-approach}
+
+- カテゴリカル別水準を示したいときはhorizontal bar chartが効果的
+- 読みやすさ or メッセージと整合的な形でカテゴリーをソートする
+
+:::
+
+
+:::
+
+
+## 可視化実装
+### (A) Plotly with horizontal bar plot
+
+
+```{python}
+import plotly.graph_objects as go
+
+fig = go.Figure()
+
+# Add bars for 2024/2025
+fig.add_trace(
+    go.Bar(
+        y=df.index,
+        x=df["2024"],
+        legendgroup="group",
+        legendgrouptitle_text="year",
+        name="2024",
+        orientation="h",
+        marker_color="#003366",
+    )
+)
+
+# Add bars for 2019
+fig.add_trace(
+    go.Bar(
+        y=df.index,
+        x=df["2019"],
+        legendgroup="group",
+        legendgrouptitle_text="year",
+        name="2019",
+        orientation="h",
+        marker_color="#99ccff",
+    )
+)
+
+
+# Layout customization
+fig.update_layout(
+    title=dict(
+        text="2020年コロナ流行後も人々の日常交通手段は依然として車が中心的",
+        font=dict(size=21),
+    ),
+    xaxis=dict(
+        title="Share of commuters",
+        tickformat=".0%",  # Format as percentage
+        tickfont=dict(size=16),
+        range=[0, 1.0],
+        gridcolor="#DEDEDE",
+    ),
+    yaxis=dict(
+        tickfont=dict(size=16),
+        automargin=True,  # helps avoid label clipping
+    ),
+    barmode="group",  # you can also try 'group' for grouped layout
+    height=600,
+    bargroupgap=0,
+    legend=dict(orientation="h", yanchor="bottom", y=0.1, xanchor="right", x=0.95),
+    plot_bgcolor="#EFF5F5",
+)
+
+fig.add_annotation(
+    text="Source: Statista Consumer Insights, 3,338(2019) and 7,447(2024) U.S. respondents (18-64 y/o)",
+    xref="paper",
+    yref="paper",
+    x=-0.15,
+    y=-0.2,  # y < 0 puts it below the chart
+    showarrow=False,
+    font=dict(size=14, color="gray"),
+    xanchor="left",
+)
+
+fig.update_layout(
+    margin=dict(t=40, b=100)  # increase bottom margin
+)
+
+fig.show()
+```
+
+### (B) Matplotlib with horizontal bar plot
+
+```{python}
+import matplotlib.pyplot as plt
+import numpy as np
+from regmonkey_style import stylewizard as sw
+
+# japanese language setup
+sw.set_font("IPAexGothic")
+
+# Set figure size and style
+fig, ax = plt.subplots(figsize=(12, 10))
+
+# Create horizontal bars
+y_pos = np.arange(len(df.index))
+width = 0.35
+
+# Plot bars for 2024 and 2019
+bar1 = ax.barh(y_pos + width / 2, df["2019"], width, label="2019", color="#99ccff")
+bar2 = ax.barh(y_pos - width / 2, df["2024"], width, label="2024", color="#003366")
+
+# Customize axes
+ax.set_yticks(y_pos)
+ax.set_yticklabels(df.index, fontsize=16)
+ax.set_xlabel("Share of commuters", fontsize=16)
+title = ax.set_title(
+    "2020コロナ流行後も人々の日常交通手段は依然として車が中心的",
+    loc="left",
+    pad=20,
+    fontsize=21,
+)
+title.set_position((-0.1, title.get_position()[1]))
+
+# Format x-axis as percentage
+ax.set_xlim(0, 1.0)
+ax.xaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: "{:.0%}".format(x)))
+ax.tick_params(axis="x", labelsize=16)
+
+# Customize grid
+ax.grid(axis="x", color="#DEDEDE")
+ax.set_facecolor("#EFF5F5")
+
+# Add legend
+ax.legend(loc="lower right", bbox_to_anchor=(0.95, 0.1), ncol=2)
+
+# Add source annotation
+fig.text(
+    0,
+    0.1,
+    "Source: Statista Consumer Insights, 3,338(2019) and 7,447(2024) U.S. respondents (18-64 y/o)",
+    fontsize=12,
+    color="gray",
+    ha="left",
+)
+
+# Adjust layout to prevent clipping
+plt.subplots_adjust(bottom=0.2)
+
+plt.show()
+```
+
+References
+----------
+- @StoryTellingWithData, p57-58

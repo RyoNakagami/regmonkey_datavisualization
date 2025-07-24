@@ -1,0 +1,41 @@
+---
+title: "データ可視化の20 Rules"
+author: "Ryo Nakagami"
+date: "2025-07-23"
+date-modified: last-modified
+number_sections: false
+code-fold: true
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+jupyter: python3
+---
+
+
+::: {.callout-note}
+## Rules
+
+1. SVGやEPSなどのvector graphicsを利用すること
+2. 読みやすいフォントを使用すること
+3. ごちゃごちゃした凡例(legend)は害悪
+
+:::
+
+### Rule 1: SVGやEPSなどのvector graphicsを利用すること
+
+- vector graphicsは拡大しても鮮明さを保ち，ぼやけることがありません
+- JPEG、BMP、PNGファイルは拡大すると画像がぼやけたり，非常に高解像度で保存した場合にはファイルサイズが極めて大きくなったりしてしまう
+- `Plotly`にて`svg`形式でオブジェクトを保存する場合は `kaleido` が必要
+
+### Rule 2: 読みやすいフォントを使用すること
+
+- 日本語対応サンセリフ体として，`Meiryo`, `M+ 1p`, `IPAexGothic` があるので，これらのいずれかを使用すること
+- font typeだけでなく，font sizeも重要な要素．つぶれて読めなくなってしまう状況を回避すること
+
+### Rule 3: ごちゃごちゃした凡例(legend)は害悪
+
+- 凡例の乱れは精神の乱れ
+- 可能であれば，凡例を使わずにプロットの要素に直接ラベルを付ける
+- 最低限，凡例がプロットされたデータを隠さないように配置すること
+- sequential dataであるならば，legendの順番は降順(highest to lowest)に並んでいること

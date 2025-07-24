@@ -1,14 +1,4 @@
 /*-- scss:rules --*/
-.MathJax {
-  overflow-x: auto;
-  overflow-y: hidden;
-  max-width: 100%;
-}
-
-.MathJax_Display {
-  overflow: clip visible !important;
-}
-
 .blog-custom-border {
   padding-left: 2em;
   padding-right: 2em;
@@ -20,4 +10,63 @@
 
 .chapter-number::after {
   content: ".";
+}
+
+li{
+  margin-top: 0.25em;
+}
+
+
+/* --------------------------*/
+/*   contents style          */
+/* --------------------------*/
+
+.mini-section {
+  font-weight: bold;
+  font-size: 1.1em;
+  display: inline-flex;
+  align-items: center;
+}
+
+.mini-section::before {
+  content: "▶";
+  margin-right: 0.4em;
+}
+
+/* --------------------------*/
+/*   Approach                */
+/* --------------------------*/
+.regmonkey-approach {
+  font-size: 1.1em;
+}
+
+.regmonkey-approach li{
+  margin-top: 0.5em;
+}
+
+.def-title{
+  font-weight: bold;
+}
+
+.def-title::before {
+  content: ": ";
+  font-weight: normal; /* optional: keep the colon unbolded */
+}
+
+.def-title-no-before{
+  font-weight: bold;
+}
+
+/* --------------------------*/
+/*          MathJax          */
+/* --------------------------*/
+
+.MathJax {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+}
+
+.MathJax_Display {
+  overflow: clip visible !important;
 }

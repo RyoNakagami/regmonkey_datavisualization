@@ -26,6 +26,10 @@ attrs = "^25.3.0"
 six = "^1.17.0"
 typing-extensions = "^4.13.2"
 nbclient = "^0.10.2"
+yfinance = "^0.2.65"
+palettable = "^3.3.3"
+scikit-learn = "^1.7.1"
+cmap = "^0.6.2"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

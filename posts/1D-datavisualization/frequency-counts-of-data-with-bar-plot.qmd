@@ -47,14 +47,25 @@ df = pd.DataFrame(data)
 df
 ```
 
+
+
 ### 可視化方針
 
-以下では
+::: {.callout-note}
+
+### 要件
+
+:::{.regmonkey-approach}
 
 1. 複数カテゴリ変数を結合して生成したラベル変数をkey，出現頻度をvalueとしたデータについて，出現頻度をbar plot, 累積頻度をline plotとして可視化
 2. 2つのカテゴリ次元にわたる値の頻度分布をheatmapを用いて可視化
 
-の２つを可視化実装を取り扱いますが，実装説明の前にEDAとしてどのようなstory-tellingが考えられるか紹介します．
+:::
+:::
+
+
+
+以上の２つを可視化実装を取り扱いますが，実装説明の前にEDAとしてどのようなstory-tellingが考えられるか紹介します．
 
 <!--::: {.callout-note collapse="true" icon=false}-->
 ::: {.callout-note collapse="false" icon=false}

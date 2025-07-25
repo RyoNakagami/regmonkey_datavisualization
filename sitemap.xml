@@ -2,46 +2,50 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://ryonakagami.github.io/regmonkey_datavisualization/index.html</loc>
-    <lastmod>2025-07-24T00:22:15.943Z</lastmod>
+    <lastmod>2025-07-25T09:34:37.967Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/regmonkey_datavisualization/posts/introduction.html</loc>
-    <lastmod>2025-07-24T00:22:15.945Z</lastmod>
+    <lastmod>2025-07-25T09:34:37.969Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/regmonkey_datavisualization/posts/eda-setup/chapter-header.html</loc>
-    <lastmod>2025-07-24T00:22:15.945Z</lastmod>
+    <lastmod>2025-07-25T09:34:37.969Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/regmonkey_datavisualization/posts/eda-setup/font-setup.html</loc>
-    <lastmod>2025-07-24T00:22:15.945Z</lastmod>
+    <lastmod>2025-07-25T09:34:37.969Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/regmonkey_datavisualization/posts/visualization-components/chapter-header.html</loc>
-    <lastmod>2025-07-24T00:22:15.946Z</lastmod>
+    <lastmod>2025-07-25T09:34:37.969Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ryonakagami.github.io/regmonkey_datavisualization/posts/visualization-components/Axes.html</loc>
+    <lastmod>2025-07-25T09:34:37.969Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/regmonkey_datavisualization/posts/visualization-components/legends.html</loc>
-    <lastmod>2025-07-24T00:22:15.946Z</lastmod>
+    <lastmod>2025-07-25T09:34:37.969Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/regmonkey_datavisualization/posts/1D-datavisualization/chapter-header.html</loc>
-    <lastmod>2025-07-24T00:22:15.945Z</lastmod>
+    <lastmod>2025-07-25T09:34:37.968Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/regmonkey_datavisualization/posts/1D-datavisualization/frequency-counts-of-data-with-bar-plot.html</loc>
-    <lastmod>2025-07-24T00:22:15.945Z</lastmod>
+    <lastmod>2025-07-25T09:34:37.968Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/regmonkey_datavisualization/posts/relationships-between-variables/chapter-header.html</loc>
-    <lastmod>2025-07-24T00:22:15.945Z</lastmod>
+    <lastmod>2025-07-25T09:34:37.969Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/regmonkey_datavisualization/posts/comparison-of-groups/chapter-header.html</loc>
-    <lastmod>2025-07-24T00:22:15.945Z</lastmod>
+    <lastmod>2025-07-25T09:34:37.969Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/regmonkey_datavisualization/posts/comparison-of-groups/categorical-group-ratios-with-stacked-bar-plot.html</loc>
-    <lastmod>2025-07-24T00:22:15.945Z</lastmod>
+    <lastmod>2025-07-25T09:34:37.969Z</lastmod>
   </url>
 </urlset>

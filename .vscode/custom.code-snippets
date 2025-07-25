@@ -220,7 +220,7 @@
   // code general
   // --------------------------------------------
   "code-unfold": {
-    "scope": "Python, R, Julia",
+    "scope": "python, R, Julia",
     "prefix": "unfold",
     "body": [
       "#| code-fold: false"
@@ -240,7 +240,7 @@
   // figure
   // --------------------------------------------
   "two-figure-plot": {
-    "scope": "Python, R, quarto",
+    "scope": "python, R, quarto",
     "prefix": "two-figure",
     "body": [
       "#| layout-ncol: 2",

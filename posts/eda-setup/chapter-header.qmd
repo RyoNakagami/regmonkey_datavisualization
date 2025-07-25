@@ -18,8 +18,8 @@ jupyter: python3
 
 1. SVGやEPSなどのvector graphicsを利用すること
 2. 読みやすいフォントを使用すること
-3. ごちゃごちゃした凡例(legend)は害悪
-
+3. ごちゃごちゃした凡例(legend)は害悪．最低限，legendがデータポイントを隠してしまう事態は避けること
+11. Axes(軸)には適切なラベルをつけること
 :::
 
 ### Rule 1: SVGやEPSなどのvector graphicsを利用すること

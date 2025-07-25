@@ -14,7 +14,7 @@ code-fold: true
 
 |Blog Series|内容|
 |:---:|:---|
-|[Ryo's Tech Blog](https://ryonakagami.github.io/)|日々の徒然日記，Linuxまわりや開発お作法を主に取り扱う|
+|[Regmonkey datascience blog](https://ryonakagami.github.io/regmonkey-datascience-blog/)|日々の徒然日記，Linuxまわりや開発お作法を主に取り扱う|
 |[Statistics for Regression Monkeys](https://ryonakagami.github.io/statistics-for-regression-monkey/)|数理統計学入門ノート|
 |[Python package building techniques for regmonkeys](https://ryonakagami.github.io/python-statisticalpackage-techniques/)|Python分析パッケージ作成ガイド|
 |[OhGoshGit!?!](https://ohgoshgit.github.io/)|Git trouble-shooting note|

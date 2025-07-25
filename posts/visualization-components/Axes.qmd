@@ -1,0 +1,358 @@
+---
+title: "Axes"
+jupyter: python3
+author: "Ryo Nakagami"
+date: "2025-07-25"
+date-modified: "2025-07-25"
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+# when you run this file locally, do not forget to run poetry shell
+---
+
+## Axesとは？
+
+::: {#def- .custom_problem .blog-custom-border}
+[Axes]{.def-title}
+
+- Axesとは，可視化オブジェクト内のデータポイントと数値的な意味を結びつけるための参照軸のこと
+- Axesがあることで，「このデータポイントは何の値を表しているか」「他のポイントと比べてどれくらい大きいか/小さいか」といった情報を読み取ることができる
+
+:::
+
+### Axes Title
+
+::: {.callout-note}
+## Rules
+
+- 目盛（tick marks）の単位を示すこと
+
+:::
+
+下記の例では，Bad Exampleのy-axisでは「平均気温」の単位が記載されていません．日本では一般的に，摂氏がもしいられるので単位がなくても理解できるかもしれませんが，「℃」をy-axisに付与して目盛りの意味の解釈を容易にすることが読み手に対する配慮となります．
+
+
+```{python}
+# | layout-nrow: 2
+
+import pandas as pd
+
+# ----------------------------
+## 気象データdata preprocess
+# ----------------------------
+
+
+def join_multilevel_col(col):
+    level0, level1, level2 = col
+    if "Unnamed:" in level2:
+        level2 = ""
+    if level2:
+        return (level0, f"{level1}_{level2}")
+    else:
+        return (level0, level1)
+
+
+# CSV読み込み（3行ヘッダー）
+df = pd.read_csv("../data/monthly-average-temp-2024.csv", header=[0, 1, 2])
+
+# '年月'のカラム名タプルが以下のようになっている前提
+idx_col = ("Unnamed: 0_level_0", "年月", "Unnamed: 0_level_2")
+
+# インデックスに設定
+df.set_index(idx_col, inplace=True)
+
+# インデックス名をわかりやすく変更（任意）
+df.index.name = "年月"
+df.columns = pd.Index([join_multilevel_col(col) for col in df.columns])
+df = df.stack(level=0, future_stack=True).reset_index()
+
+rename_dict = {
+    "年月": "YearMonth",
+    "level_1": "City",
+    "平均気温(℃)": "average_temp",
+    "平均気温(℃)_品質情報": "average_temp_QualityInfo",
+    "平均気温(℃)_均質番号": "average_temp_KinshitsuNumber",
+    "降水量の合計(mm)": "total_precipitation_mm",
+    "降水量の合計(mm)_品質情報": "total_precipitation_mm_QualityInfo",
+    "降水量の合計(mm)_均質番号": "total_precipitation_mm_KinshitsuNumber",
+    "降水量の合計(mm)_現象なし情報": "total_precipitation_mm_NoPhenomenonInfo",
+}
+
+df = df.rename(columns=rename_dict)
+
+# data type
+df["YearMonth"] = pd.to_datetime(df["YearMonth"], format="%Y/%m")
+
+# ----------------------------
+## plot
+# ----------------------------
+import plotly.express as px
+
+okabe_ito_palette = [
+    "#E69F00",  # orange
+    "#56B4E9",  # sky blue
+    "#009E73",  # bluish green
+    "#F0E442",  # yellow
+    "#0072B2",  # blue
+    "#D55E00",  # vermillion
+    "#CC79A7",  # reddish purple
+    "#000000",  # black
+]
+
+# 1. sort
+city_order = (
+    df.groupby("City")["average_temp"].max().sort_values(ascending=False).index.tolist()
+)
+
+# 2. Set categorical order for 'City'
+df["City"] = pd.Categorical(df["City"], categories=city_order, ordered=True)
+
+df = df.sort_values(by=["City", "YearMonth"]).reset_index(drop=True)
+
+# ----------------------------
+## Bad Example
+# ----------------------------
+fig = px.line(
+    df,
+    x="YearMonth",
+    y="average_temp",
+    color="City",
+    color_discrete_sequence=okabe_ito_palette,
+    template="ggplot2",
+    labels={"City": "観測都市"},
+)
+
+# Change axis titles
+fig.update_layout(
+    title=dict(
+        text="月別平均気温の推移（都市別） - Bad Example",
+        x=0.075,
+        xanchor="left",
+        y=0.95,
+        yanchor="top",
+        font=dict(size=20),
+    ),
+    margin=dict(t=80),
+    xaxis_title="年月",
+    yaxis_title="平均気温",
+    xaxis=dict(tickformat="%Y-%m"),
+    width=640,  # (px)
+    height=400,
+    legend=dict(
+        orientation="h",  # horizontal layout
+        yanchor="bottom",
+        y=1.02,  # slightly above the plot
+        xanchor="center",
+        x=0.5,  # center-align
+    ),
+)
+
+
+fig.show()
+
+
+# ----------------------------
+## Better Example
+# ----------------------------
+fig = px.line(
+    df,
+    x="YearMonth",
+    y="average_temp",
+    color="City",
+    color_discrete_sequence=okabe_ito_palette,
+    template="ggplot2",
+    labels={"City": "観測都市"},
+)
+
+# Change axis titles
+fig.update_layout(
+    title=dict(
+        text="月別平均気温の推移（都市別） - Better Example",
+        x=0.075,
+        xanchor="left",
+        y=0.95,
+        yanchor="top",
+        font=dict(size=20),
+    ),
+    margin=dict(t=80, b=40),
+    xaxis_title="年月",
+    yaxis_title="平均気温 [°C]",
+    xaxis=dict(tickformat="%Y-%m"),
+    width=640,  # (px)
+    height=400,
+    legend=dict(
+        orientation="h",  # horizontal layout
+        yanchor="bottom",
+        y=1.02,  # slightly above the plot
+        xanchor="center",
+        x=0.5,  # center-align
+    ),
+)
+
+fig.add_annotation(
+    text="<a href='https://www.data.jma.go.jp/risk/obsdl/index.php' target='_blank' style='color:gray;'>出所: 気象庁 &gt; 過去の気象データより作成</a>",
+    xref="paper",
+    yref="paper",
+    x=0,
+    y=-0.2,
+    showarrow=False,
+    font=dict(size=12),
+    align="left"
+)
+
+
+fig.show()
+```
+
+
+### Tick Marks(目盛り)
+
+::: {.callout-note}
+## Rules
+
+- 軸上に要素のラベルや目盛りを過剰に配置しない
+- ラベル付きの目盛りの間隔が常に一定となるようにする
+
+:::
+
+適切な目盛りラベルの間隔は，可視化で伝えたいストーリー/キーメッセージに依存するのでケースバイケースで判断する必要があります．以下の例は，Googleの
+株価の長期的なトレンドを示した時系列plotを用いて，軸ラベル間隔の違いによる可視性への影響を比較しています．この可視化の目的を
+
+- 長期的なトレンドや大まかな動きを示したい
+- 四半期ベースでの周期性を示したい
+
+とすると，Bad Exampleのような「月次」目盛りは，不必要にラベルが混雑してしまい，視認性が落ちてしまっています．一方，Better Exampleは目盛りラベルを四半期にフォーカスしているので
+
+- 視覚的にすっきり
+- 全体の動きやトレンドが見やすくなっている
+
+というメリットがあります．ただし，四半期目盛りでは月単位の詳細な変化が省略されるため，「特定の月中旬に起きた急騰・急落」のようなイベントは目盛りからは把握しにくくなります．このような場合は「Direct Labelling」や「hover data」などを活用することで，視認性と情報密度のバランスを保ちつつ，ユーザーの関心に応じて詳細を掘り下げるのが良いです．
+
+```{python}
+import numpy as np
+import plotly.express as px
+
+df = px.data.stocks()
+fig = px.line(
+    df,
+    x="date",
+    y="GOOG",
+    color_discrete_sequence=okabe_ito_palette,
+    template="ggplot2",
+)
+
+# Set x-axis to show daily ticks
+fig.update_layout(
+    title=dict(
+        text="Google Stock closing prices -- Bad Example",
+        x=0.075,
+        xanchor="left",
+        y=0.95,
+        yanchor="top",
+        font=dict(size=20),
+    ),
+    margin=dict(t=60),
+    xaxis=dict(
+        dtick="M1",  # daily ticks
+        tickformat="%Y-%m-%d",  # display format
+        tickangle=45,  # optional: tilt labels for readability
+    ),
+    yaxis_title="Closing Price[USD]",
+    width=720,  # (px)
+    height=450,
+    legend=dict(
+        orientation="h",  # horizontal layout
+        yanchor="bottom",
+        y=1.02,  # slightly above the plot
+        xanchor="center",
+        x=0.5,  # center-align
+    ),
+)
+
+fig.show()
+
+
+# Extract available monthly dates (for tickvals)
+all_dates = pd.to_datetime(df["date"].unique())
+
+# Extract year & month
+df["month"] = all_dates.to_period("M")
+month_dates = pd.to_datetime(df.groupby("month")["date"].min().reset_index(drop=True))
+
+tick_labels = np.where(
+    month_dates.dt.month.isin([1, 4, 7, 10]),
+    month_dates.dt.to_period("Q").astype(str),
+    "",
+)
+
+fig = px.line(
+    df,
+    x="date",
+    y="GOOG",
+    hover_data={
+        "date": False,
+        "traded-date": df["date"].values,
+        "GOOG": ":.2f",  # format to 2 decimals
+        # add other columns if needed
+    },
+    color_discrete_sequence=okabe_ito_palette,
+    template="ggplot2",
+)
+
+
+# Set x-axis to show daily ticks
+fig.update_layout(
+    title=dict(
+        text="Google Stock closing prices -- Better Example",
+        x=0.075,
+        xanchor="left",
+        y=0.95,
+        yanchor="top",
+        font=dict(size=20),
+    ),
+    margin=dict(t=60, b=80),
+    xaxis=dict(
+        dtick="M1",  # monthly tick marks
+        showgrid=True,
+        tickvals=month_dates,  # show labels only quarterly
+        ticktext=tick_labels,  # what the labels say
+        tickformat="",  # prevent default format override
+        tickangle=0,
+        ticks="outside",  # show tick marks
+    ),
+    xaxis_title="取引日",
+    yaxis_title="Closing Price[USD]",
+    width=720,  # (px)
+    height=450,
+    legend=dict(
+        orientation="h",  # horizontal layout
+        yanchor="bottom",
+        y=1.02,  # slightly above the plot
+        xanchor="center",
+        x=0.5,  # center-align
+    ),
+)
+
+# Use hovertemplate for formatting and hiding 'date' column
+fig.update_traces(
+    hovertemplate=(
+        "取引日: %{customdata[0]}<br>" + "GOOG: %{y:.2f}<br>" + "<extra></extra>"
+    )
+)
+
+# レイアウト下部にデータソース注釈を追加
+fig.add_annotation(
+    text="Data source: Yahoo Finance (via plotly.data.stocks)",
+    xref="paper",
+    yref="paper",
+    x=0,
+    y=-0.2,  # x=0: 左寄せ, y=-0.15: グラフの下
+    showarrow=False,
+    font=dict(size=12, color="gray"),
+    align="left",
+)
+
+
+fig.show()
+```

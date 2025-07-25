@@ -1,6 +1,8 @@
 project:
   type: book
   output-dir: _book
+  preview:
+    port: 4203
 
 book:
   title: "Data Visualization for Regression Monkeys"
@@ -44,6 +46,7 @@ book:
         - posts/eda-setup/font-setup.qmd
     - part: posts/visualization-components/chapter-header.qmd
       chapters:
+        - posts/visualization-components/Axes.qmd
         - posts/visualization-components/legends.qmd
     - part: posts/1D-datavisualization/chapter-header.qmd
       chapters:

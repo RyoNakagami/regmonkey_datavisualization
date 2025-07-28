@@ -343,7 +343,7 @@ from regmonkey_style import stylewizard as sw
 
 # japanese language setup
 sw.set_font("IPAexGothic")
-
+# sw.set_font("MPLUS1p")
 
 fig, ax1, ax2 = plot_category_frequency_matplotlib(
     data=df_sorted,

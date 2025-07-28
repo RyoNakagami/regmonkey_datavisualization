@@ -1,0 +1,9 @@
+<!-- pseudocode-init.html -->
+<script src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll("pre.pseudocode").forEach(el => {
+    pseudocode.renderElement(el);
+  });
+});
+</script>

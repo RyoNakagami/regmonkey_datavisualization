@@ -1,0 +1,254 @@
+---
+title: "Image File format"
+jupyter: python3
+author: "Ryo Nakagami"
+date: "2025-07-25"
+date-modified: "2025-07-25"
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+# when you run this file locally, do not forget to run poetry shell
+---
+
+## Image File Formatの種類
+
+::: {.callout-note}
+## Rules
+
+- 原則，[vector graphics formatを使用すること]{.regmonkey-bold}
+- vector graphicsは拡大しても鮮明さを保ち，ぼやけることがない
+
+:::
+
+あくまでルールであり，実際の運用では状況に応じてpngファイルなどを使用しても良いと思います．
+
+::: {#exm- .custom_problem }
+[場面別file format]{.def-title}
+
+|使用場面|file format|説明|
+|------|------------|----|
+|line plot|svg|線や点が拡大してもぼやけることなく，シャープな表示を保つため|
+|scatter plot|svg|data pointsやAxesのテキスト，Legendsなどが拡大しても鮮明さを失わないため|
+|network diagram|svg|node/edgeといった要素が，拡大・縮小しても明瞭に維持されるため|
+|heatmap|png|滑らかな色のグラデーション表現が重要なため|
+|pngのfile sizeが大きすぎる|jpeg|非可逆圧縮だが，色表現能力に対して高い圧縮率という特徴があるため|
+: {tbl-colwidths="[20, 20, 60]"}
+
+:::
+***
+
+
+### Bitmap and Vector graphics
+
+::: {#def- .custom_problem .blog-custom-border}
+[Bitmaps(aster graphics)]{.def-title}
+
+- pixelsという色付きのブロックでイメージを格納する方法
+- 主に連続的な色の変化や複雑な質感を表現する際に使われる
+
+:::
+
+Bitmapsは，ヒートマップのように色の濃淡で情報を表現する際によく用いられるファイル形式です．一方，拡大するとピクセルが粗くなり，ぼやけたりギザギザになったりしてしまうので，ズーム機能を活用して表示する場面（特にinteractiveに解釈する場面）には不向きです．
+
+
+::: {#def- .custom_problem .blog-custom-border}
+[Vector graphics]{.def-title}
+
+- 個々のグラフィック要素の配置の組み合わせで可視化データを格納する方法
+- 「左上から右下まで黒い線があり，左下から右上まで赤い線がある」といった情報をベースに，印刷や表示時にリアルタイムでデータを再現している
+
+:::
+
+- Vector graphics形式の例として，SVG(Scalable Vector Graphics)形式があります
+- SVG 規格はXML（eXtensible Markup Language）形式で記述されています
+
+
+[Vector graphicsの注意点]{.mini-section}
+
+::: {.callout-warning}
+### 注意点 1
+
+- 同じ可視化graphics fileでも異なる実行環境で表示すると見た目に違いが生じることがある
+
+:::
+
+これはfont置換の場合，特に発生しやすいです．可視化graphics fileが`Meiryo`フォントで作成されたとき，表示環境で`Meiryo`が利用できないと別のフォントで置換されて表示されるためです．一方，`png`などのBitmaps形式では，pixels画像としてデータを格納しているので置換問題は発生しません．
+
+::: {.callout-warning}
+### 注意点 2
+
+- 非常に大きくて複雑な可視化オブジェクトの場合，file sizeが非常に大きくなるリスクがある
+- file sizeが大きくなると，レンダリングに時間がかかってしまう
+
+:::
+
+数百万のdata pointsからなるscatter plotの場合，各data pointsの座標情報がvector graphicsでは必要となるため，ファイルサイズがMBスケールになる可能性があります．
+
+
+::: {#exm- .custom_problem }
+[data pointsとfile size]{.def-title}
+
+<pre id="compute-svg-png-file-size">
+\begin{algorithm}
+\caption{Scatter Plot Rendering and Size Measurement}
+\begin{algorithmic}
+\PROCEDURE{setup}{} 
+    \STATE mean vector $\mu = [0, 0]$
+    \STATE covariance matrix $\Sigma = \begin{bmatrix} 1 & 0 \\ 0 & 100 \end{bmatrix}$
+    \STATE num\_points: 16 integers linearly spaced from 1 to 1500
+\ENDPROCEDURE
+
+\PROCEDURE{Main}{}
+    \STATE Set random seed to 42
+    \STATE Initialize empty lists: \texttt{kb\_svg}, \texttt{kb\_png}, and \texttt{kb\_pdf}
+    \FOR{each \texttt{num} in \texttt{num\_points}}
+        \STATE Sample \texttt{num} 2D points: $x, y \sim \mathcal{N}(\mu, \Sigma)$
+        \STATE Create scatter plot \texttt{fig} using the sampled points and Plotly
+        \STATE Convert \texttt{fig} to SVG, PNG, and PDF image formats
+        \STATE Measure file sizes of both formats in kilobytes
+        \STATE Append sizes to \texttt{kb\_svg}, \texttt{kb\_png}, and \texttt{kb\_pdf}
+    \ENDFOR
+\ENDPROCEDURE
+\end{algorithmic}
+\end{algorithm}
+</pre>
+
+<script>
+    pseudocode.renderElement(document.getElementById("compute-svg-png-file-size"));
+</script>
+
+上記のアルゴリズムに則り，data points sizeに応じたsvg, pngのfile size(KB単位)を可視化したのが以下となります．svg形式では，線形にfile sizeが増えていくのに対して，pngではfile size関数はconcaveとなっています．
+
+```{python}
+import plotly.graph_objects as go
+import numpy as np
+import random
+
+np.random.seed(42)
+
+# covariance matrix
+mean = [0, 0]
+cov = [[1, 0], [0, 100]]  # diagonal covariance
+
+# データの準備（xとyの座標）
+num_points = np.int64(np.linspace(1, 1200, 13))
+
+# byte list
+kb_svg = []
+kb_png = []
+kb_pdf = []
+
+# 散布図の作成とSVGへの保存
+for num in num_points:
+    x, y = np.random.multivariate_normal(mean, cov, num).T
+    trace = go.Scatter(x=x, y=y, mode="markers", marker=dict(size=10))
+
+    fig = go.Figure(data=[trace])
+
+    # SVGとして保存
+    svg_content = fig.to_image(format="svg")
+    png_content = fig.to_image(format="png")
+    pdf_content = fig.to_image(format="pdf")
+
+    # ファイルサイズを取得(KBに換算)
+    kb_svg.append(len(svg_content) / 1024)
+    kb_png.append(len(png_content) / 1024)
+    kb_pdf.append(len(pdf_content) / 1024)
+
+    del x, y, svg_content, png_content, pdf_content
+
+
+# ----------------------------
+# Create line plot for file sizes
+# ----------------------------
+# color setup
+okabe_ito_colors = [
+    "#000000",
+    "#E69F00",
+    "#56B4E9",
+    "#009E73",
+    "#F0E442",
+    "#0072B2",
+    "#D55E00",
+    "#CC79A7",
+]
+
+
+fig_bytes = go.Figure()
+
+# Add SVG line
+fig_bytes.add_trace(
+    go.Scatter(
+        x=num_points,
+        y=kb_svg,
+        mode="lines+markers",
+        name="SVG File Size",
+        line=dict(color=okabe_ito_colors[1], width=2),
+        marker=dict(size=6),
+    )
+)
+
+# Add PNG line
+fig_bytes.add_trace(
+    go.Scatter(
+        x=num_points,
+        y=kb_png,
+        mode="lines+markers",
+        name="PNG File Size",
+        line=dict(color=okabe_ito_colors[2], width=2),
+        marker=dict(size=6),
+    )
+)
+
+# Add PDF line
+fig_bytes.add_trace(
+    go.Scatter(
+        x=num_points,
+        y=kb_pdf,
+        mode="lines+markers",
+        name="PDF File Size",
+        line=dict(color=okabe_ito_colors[3], width=2),
+        marker=dict(size=6),
+    )
+)
+
+# Update layout
+fig_bytes.update_layout(
+    title=dict(
+        text="Plotly-based File Size Comparison: SVG, PNG vs PDF",
+        x=0.075,
+        xanchor="left",
+        y=0.95,
+        yanchor="top",
+        font=dict(size=20),
+    ),
+    margin=dict(t=80, b=40),
+    xaxis_title="Number of Data Points",
+    yaxis_title="File Size (KB)",
+    hovermode="x unified",
+    template="plotly_white",
+    width=640,
+    height=400,
+    legend=dict(
+        orientation="h",  # horizontal layout
+        yanchor="bottom",
+        y=1.02,  # slightly above the plot
+        xanchor="center",
+        x=0.5,  # center-align
+    ),
+)
+
+
+# Update axes for better readability
+fig_bytes.update_xaxes(showgrid=True, gridwidth=1, gridcolor="lightgray")
+fig_bytes.update_yaxes(showgrid=True, gridwidth=1, gridcolor="lightgray")
+
+# Show the plot
+fig_bytes.show()
+```
+
+
+
+:::
+***

@@ -1,0 +1,131 @@
+---
+title: "Inkscapeの使い方"
+jupyter: python3
+author: "Ryo Nakagami"
+date: "2025-07-27"
+date-modified: "2025-07-27"
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+# when you run this file locally, do not forget to run poetry shell
+---
+
+## Inkscapeとは？
+
+- Inkscapeはオープンソースのベクターグラフィック編集ソフト
+- Windows，macOS，Linuxで利用可能
+- 無料版Adobe Illustratoみたいなもの
+
+### Matplotb-generated SVGとの親和性
+
+`matplotlib`からSVGを出力する場合は
+
+```python
+plt.savefig("figure.svg", format="svg", bbox_inches="tight")
+```
+
+- `bbox_inches="tight"` で余白を詰める
+- `transparent=True` で背景透明化も可能
+
+Axes, legends, font, line, datapointsなどが個別の SVG 要素として表現されるため, Inkscapeでの編集がPlotly-generated SVGと比べて容易というメリットがあります．
+
+## Inkscapeのインストール
+
+[Linuxでのインストール]{.mini-section}
+
+```zsh
+## Inkscape PPAの登録
+% sudo add-apt-repository ppa:inkscape.dev/stable
+% sudo apt update
+
+## Inkscapeのインストール
+sudo apt install inkscape
+
+```
+
+[MacOSでのインストール]{.mini-section}
+
+```zsh
+## brew update
+brew update
+
+## Inkscapeのインストール
+brew install --cask inkscape
+```
+
+## Inkscapeの使い方
+
+![Inkscape Layout](https://github.com/ryonakimageserver/dataserver-for-blog/blob/main/inkscape/inkscape-layout.png?raw=true)
+
+
+[基本操作]{.mini-section}
+
+|操作|動作内容|
+|----|------|
+|`ctrl`+スクロール|zoom up/down|
+|`space` + マウス|objectのcanvas内部の移動|
+
+
+### Scatter plotの編集
+
+::: {#exm- .custom_problem }
+[marker sizeの一括変更]{.def-title}
+
+::: {.callout-note}
+#### 手順: marker sizeの一括変更
+
+1. market 1つを選択
+2. `Shift` + `Alt` + `A`(=「**Select same object type**」)
+3. `Ctrl` + `Shift` + `M`で「**Transform window**」へ移動
+4. **Scale**タブを開き，好きなサイズに変更する
+
+:::
+
+![Resize marker size: Plotly Figure based](https://github.com/ryonakimageserver/dataserver-for-blog/blob/main/inkscape/resize-scatterplot.gif?raw=true)
+
+
+:::
+***
+
+::: {#exm- .custom_problem }
+[marker colorの一括変更]{.def-title}
+
+::: {.callout-note}
+#### 手順: marker colorの一括変更
+
+1. market 1つを選択
+2. `Select` > `Fill and Stroke`を選択
+3. `Ctrl` + `Shift` + `F` で「**Fill and Stroke設定**」を開く
+4. `RGBA`や`Opacity`の設定を実施する
+
+:::
+
+![Change datapoint color](https://github.com/ryonakimageserver/dataserver-for-blog/blob/main/inkscape/inkscape-change-datapoint-color.gif?raw=true)
+
+
+
+
+:::
+***
+
+
+## ショートカットの設定
+
+1. `Shift` + `Ctrl` + `P` で `Edit` > `Preferences`を開く
+2. `Interface` > `Keyboard`を選択
+3. `Name`からアサイン対象となる挙動を選択し，Shortcutの組み合わせを入力
+
+[shortcut table]{.mini-section}
+
+|動作|shortcut|自作フラグ|
+|----|-------|---------|
+|Fill and Stroke|`Shift`+`Alt`+`M`|`True`|
+|Color and Stroke設定|`Ctrl` + `Shift` + `F`|`False`|
+
+
+
+
+References
+----------
+- @InkscapeManual

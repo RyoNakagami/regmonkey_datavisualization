@@ -48,6 +48,9 @@ print("Hallo World")
 References
 ----------
 ::: {#refs}
+
 @DataPoints
 @StoryTellingWithData
+@FundamentalsOfDataVisualization
+@InkscapeManual
 :::

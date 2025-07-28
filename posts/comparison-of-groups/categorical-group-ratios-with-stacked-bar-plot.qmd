@@ -169,7 +169,8 @@ import numpy as np
 from regmonkey_style import stylewizard as sw
 
 # japanese language setup
-sw.set_font("IPAexGothic")
+# sw.set_font("IPAexGothic")
+sw.set_font("MPLUS1p")
 
 # Set figure size and style
 fig, ax = plt.subplots(figsize=(12, 10))

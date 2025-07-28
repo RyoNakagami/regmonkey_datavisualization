@@ -31,7 +31,6 @@ book:
            aria-label: blog-ogg
        - icon: rss
          href: index.xml
-    
   repo-actions: [edit, issue]
   page-footer:
     center:
@@ -40,14 +39,16 @@ book:
         href: LICENSE
   chapters:
     - index.qmd
-    - posts/introduction.qmd
-    - part: posts/eda-setup/chapter-header.qmd
+    - part: posts/introduction.qmd
       chapters:
+        - posts/eda-setup/eda-rules.qmd
         - posts/eda-setup/font-setup.qmd
+        - posts/eda-setup/inkscape.qmd
     - part: posts/visualization-components/chapter-header.qmd
       chapters:
         - posts/visualization-components/Axes.qmd
         - posts/visualization-components/legends.qmd
+        - posts/visualization-components/image-file-format.qmd
     - part: posts/1D-datavisualization/chapter-header.qmd
       chapters:
         - posts/1D-datavisualization/frequency-counts-of-data-with-bar-plot.qmd
@@ -66,7 +67,9 @@ format:
       - include/custom_webfont.html
       - include/mathjax.html
     include-in-body: include/setup_googletagmanager_body.html
-    include-after-body: include/custom_section.html
+    include-after-body: 
+      - include/custom_section.html
+      - include/pseudocode-init.html
     lang: ja_JP.UTF-8
     number-depth: 1
     jupyter: python3

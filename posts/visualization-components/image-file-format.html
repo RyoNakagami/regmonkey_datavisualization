@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ryo Nakagami">
-<meta name="dcterms.date" content="2025-07-23">
+<meta name="dcterms.date" content="2025-07-25">
 
-<title>2&nbsp; Meiryo fontのセットアップ – Data Visualization for Regression Monkeys</title>
+<title>6&nbsp; Image File format – Data Visualization for Regression Monkeys</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -60,15 +60,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../posts/eda-setup/inkscape.html" rel="next">
-<link href="../../posts/eda-setup/eda-rules.html" rel="prev">
+<link href="../../posts/1D-datavisualization/chapter-header.html" rel="next">
+<link href="../../posts/visualization-components/legends.html" rel="prev">
 <link href="../.././img/favicon.ico" rel="icon">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -145,6 +145,9 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
 </script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml-full.js" integrity="sha256-kbAFUDxdHwlYv01zraGjvjNZayxKtdoiJ38bDTFJtaQ=" crossorigin="anonymous">
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 </head>
@@ -320,7 +323,7 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/introduction.html">Introduction</a></li><li class="breadcrumb-item"><a href="../../posts/eda-setup/font-setup.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Meiryo fontのセットアップ</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/visualization-components/chapter-header.html">可視化オブジェクトのComponents</a></li><li class="breadcrumb-item"><a href="../../posts/visualization-components/image-file-format.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Image File format</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -399,7 +402,7 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../posts/eda-setup/font-setup.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../posts/eda-setup/font-setup.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Meiryo fontのセットアップ</span></span></a>
   </div>
 </li>
@@ -434,7 +437,7 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../posts/visualization-components/image-file-format.html" class="sidebar-item-text sidebar-link">
+  <a href="../../posts/visualization-components/image-file-format.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Image File format</span></span></a>
   </div>
 </li>
@@ -488,23 +491,20 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#linux環境でのmeiryo-font設定" id="toc-linux環境でのmeiryo-font設定" class="nav-link active" data-scroll-target="#linux環境でのmeiryo-font設定">Linux環境でのMeiryo Font設定</a></li>
-  <li><a href="#meiryoフォントを用いた可視化" id="toc-meiryoフォントを用いた可視化" class="nav-link" data-scroll-target="#meiryoフォントを用いた可視化">Meiryoフォントを用いた可視化</a>
+  <li><a href="#image-file-formatの種類" id="toc-image-file-formatの種類" class="nav-link active" data-scroll-target="#image-file-formatの種類">Image File Formatの種類</a>
   <ul class="collapse">
-  <li><a href="#plotly" id="toc-plotly" class="nav-link" data-scroll-target="#plotly">Plotly</a></li>
-  <li><a href="#matplotlib" id="toc-matplotlib" class="nav-link" data-scroll-target="#matplotlib">Matplotlib</a></li>
+  <li><a href="#bitmap-and-vector-graphics" id="toc-bitmap-and-vector-graphics" class="nav-link" data-scroll-target="#bitmap-and-vector-graphics">Bitmap and Vector graphics</a></li>
   </ul></li>
-  <li><a href="#sources" id="toc-sources" class="nav-link" data-scroll-target="#sources">Sources</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/regmonkey_datavisualization/edit/main/posts/eda-setup/font-setup.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/regmonkey_datavisualization/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/regmonkey_datavisualization/edit/main/posts/visualization-components/image-file-format.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/regmonkey_datavisualization/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/introduction.html">Introduction</a></li><li class="breadcrumb-item"><a href="../../posts/eda-setup/font-setup.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Meiryo fontのセットアップ</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/visualization-components/chapter-header.html">可視化オブジェクトのComponents</a></li><li class="breadcrumb-item"><a href="../../posts/visualization-components/image-file-format.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Image File format</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Meiryo fontのセットアップ</span></h1>
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Image File format</span></h1>
 </div>
 
 
@@ -521,14 +521,14 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2025-07-23</p>
+      <p class="date">2025-07-25</p>
     </div>
   </div>
   
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">2025-07-28</p>
+      <p class="date-modified">2025-07-25</p>
     </div>
   </div>
     
@@ -539,93 +539,325 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
 </header>
 
 
-<section id="linux環境でのmeiryo-font設定" class="level2">
-<h2 class="anchored" data-anchor-id="linux環境でのmeiryo-font設定">Linux環境でのMeiryo Font設定</h2>
-<p>Linux OSの場合，<code>.local/share/fonts</code>以下に以下のMeiryoフォントをインストールします．</p>
-<div class="no-border-top-table">
+<section id="image-file-formatの種類" class="level2">
+<h2 class="anchored" data-anchor-id="image-file-formatの種類">Image File Formatの種類</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Rules
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>原則，<span class="regmonkey-bold">vector graphics formatを使用すること</span></li>
+<li>vector graphicsは拡大しても鮮明さを保ち，ぼやけることがない</li>
+</ul>
+</div>
+</div>
+<p>あくまでルールであり，実際の運用では状況に応じてpngファイルなどを使用しても良いと思います．</p>
+<div id="exm-" class="custom_problem theorem example">
+<p><span class="theorem-title"><strong>Example 6.1</strong></span> <span class="def-title">場面別file format</span></p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 19%">
-<col style="width: 26%">
-<col style="width: 53%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 60%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Fonts</th>
-<th>File</th>
-<th>Explanation</th>
+<th>使用場面</th>
+<th>file format</th>
+<th>説明</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Meiryo</td>
-<td><code>meiryo.ttc</code></td>
-<td>Meiryo UI Regular, Meiryo UI Italic, Meiryo Regular, Meiryo Italic</td>
+<td>line plot</td>
+<td>svg</td>
+<td>線や点が拡大してもぼやけることなく，シャープな表示を保つため</td>
 </tr>
 <tr class="even">
-<td></td>
-<td><code>meiryob.ttc</code></td>
-<td>Meiryo UI Bold, Meiryo UI Bold Italic, Meiryo Bold, Meiryo Bold Italic</td>
+<td>scatter plot</td>
+<td>svg</td>
+<td>data pointsやAxesのテキスト，Legendsなどが拡大しても鮮明さを失わないため</td>
+</tr>
+<tr class="odd">
+<td>network diagram</td>
+<td>svg</td>
+<td>node/edgeといった要素が，拡大・縮小しても明瞭に維持されるため</td>
+</tr>
+<tr class="even">
+<td>heatmap</td>
+<td>png</td>
+<td>滑らかな色のグラデーション表現が重要なため</td>
+</tr>
+<tr class="odd">
+<td>pngのfile sizeが大きすぎる</td>
+<td>jpeg</td>
+<td>非可逆圧縮だが，色表現能力に対して高い圧縮率という特徴があるため</td>
 </tr>
 </tbody>
 </table>
 </div>
-<p><span class="mini-section">環境要件</span></p>
+<hr>
+<section id="bitmap-and-vector-graphics" class="level3">
+<h3 class="anchored" data-anchor-id="bitmap-and-vector-graphics">Bitmap and Vector graphics</h3>
+<div id="def-" class="custom_problem blog-custom-border theorem definition">
+<p><span class="theorem-title"><strong>Definition 6.1</strong></span> <span class="def-title">Bitmaps(aster graphics)</span></p>
 <ul>
-<li>Linux operating system(Ubuntuを含む)</li>
-<li><code>fc-cache</code> コマンド
-<ul>
-<li>MacOsで実行する場合は, <code>brew install ricty</code> を実行することで<code>fc-cache</code> コマンドが利用可能になります</li>
-</ul></li>
+<li>pixelsという色付きのブロックでイメージを格納する方法</li>
+<li>主に連続的な色の変化や複雑な質感を表現する際に使われる</li>
 </ul>
-<p><span class="mini-section">手順</span></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># download repository</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/yourusername/ManualFontInstaller.git</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ManualFontInstaller</span>
+</div>
+<p>Bitmapsは，ヒートマップのように色の濃淡で情報を表現する際によく用いられるファイル形式です．一方，拡大するとピクセルが粗くなり，ぼやけたりギザギザになったりしてしまうので，ズーム機能を活用して表示する場面（特にinteractiveに解釈する場面）には不向きです．</p>
+<div id="def-" class="custom_problem blog-custom-border theorem definition">
+<p><span class="theorem-title"><strong>Definition 6.2</strong></span> <span class="def-title">Vector graphics</span></p>
+<ul>
+<li>個々のグラフィック要素の配置の組み合わせで可視化データを格納する方法</li>
+<li>「左上から右下まで黒い線があり，左下から右上まで赤い線がある」といった情報をベースに，印刷や表示時にリアルタイムでデータを再現している</li>
+</ul>
+</div>
+<ul>
+<li>Vector graphics形式の例として，SVG(Scalable Vector Graphics)形式があります</li>
+<li>SVG 規格はXML（eXtensible Markup Language）形式で記述されています</li>
+</ul>
+<p><span class="mini-section">Vector graphicsの注意点</span></p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+注意点 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>同じ可視化graphics fileでも異なる実行環境で表示すると見た目に違いが生じることがある</li>
+</ul>
+</div>
+</div>
+<p>これはfont置換の場合，特に発生しやすいです．可視化graphics fileが<code>Meiryo</code>フォントで作成されたとき，表示環境で<code>Meiryo</code>が利用できないと別のフォントで置換されて表示されるためです．一方，<code>png</code>などのBitmaps形式では，pixels画像としてデータを格納しているので置換問題は発生しません．</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+注意点 2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>非常に大きくて複雑な可視化オブジェクトの場合，file sizeが非常に大きくなるリスクがある</li>
+<li>file sizeが大きくなると，レンダリングに時間がかかってしまう</li>
+</ul>
+</div>
+</div>
+<p>数百万のdata pointsからなるscatter plotの場合，各data pointsの座標情報がvector graphicsでは必要となるため，ファイルサイズがMBスケールになる可能性があります．</p>
+<div id="exm-" class="custom_problem theorem example">
+<p><span class="theorem-title"><strong>Example 6.2</strong></span> <span class="def-title">data pointsとfile size</span></p>
+<pre id="compute-svg-png-file-size">\begin{algorithm}
+\caption{Scatter Plot Rendering and Size Measurement}
+\begin{algorithmic}
+\PROCEDURE{setup}{} 
+    \STATE mean vector $\mu = [0, 0]$
+    \STATE covariance matrix $\Sigma = \begin{bmatrix} 1 &amp; 0 \\ 0 &amp; 100 \end{bmatrix}$
+    \STATE num\_points: 16 integers linearly spaced from 1 to 1500
+\ENDPROCEDURE
+
+\PROCEDURE{Main}{}
+    \STATE Set random seed to 42
+    \STATE Initialize empty lists: \texttt{kb\_svg}, \texttt{kb\_png}, and \texttt{kb\_pdf}
+    \FOR{each \texttt{num} in \texttt{num\_points}}
+        \STATE Sample \texttt{num} 2D points: $x, y \sim \mathcal{N}(\mu, \Sigma)$
+        \STATE Create scatter plot \texttt{fig} using the sampled points and Plotly
+        \STATE Convert \texttt{fig} to SVG, PNG, and PDF image formats
+        \STATE Measure file sizes of both formats in kilobytes
+        \STATE Append sizes to \texttt{kb\_svg}, \texttt{kb\_png}, and \texttt{kb\_pdf}
+    \ENDFOR
+\ENDPROCEDURE
+\end{algorithmic}
+\end{algorithm}
+</pre>
+<script>
+    pseudocode.renderElement(document.getElementById("compute-svg-png-file-size"));
+</script>
+<p>上記のアルゴリズムに則り，data points sizeに応じたsvg, pngのfile size(KB単位)を可視化したのが以下となります．svg形式では，線形にfile sizeが増えていくのに対して，pngではfile size関数はconcaveとなっています．</p>
+<div id="a5032780" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.graph_objects <span class="im">as</span> go</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Run script</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">./install_fonts.sh</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="meiryoフォントを用いた可視化" class="level2">
-<h2 class="anchored" data-anchor-id="meiryoフォントを用いた可視化">Meiryoフォントを用いた可視化</h2>
-<section id="plotly" class="level3">
-<h3 class="anchored" data-anchor-id="plotly">Plotly</h3>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.scatter(x<span class="op">=</span>[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>], y<span class="op">=</span>[<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>], title<span class="op">=</span><span class="st">"サンプルグラフ"</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># X軸ラベルの追加</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>fig.update_layout(</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    xaxis_title<span class="op">=</span><span class="st">"時間（秒）"</span>,  <span class="co"># ← ここがX軸ラベル</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    font<span class="op">=</span><span class="bu">dict</span>(family<span class="op">=</span><span class="st">"Meiryo"</span>)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="matplotlib" class="level3">
-<h3 class="anchored" data-anchor-id="matplotlib">Matplotlib</h3>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">"font.family"</span>] <span class="op">=</span> <span class="st">"Meiryo"</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> [<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>]</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>plt.plot(x, y, marker<span class="op">=</span><span class="st">"o"</span>)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"サンプルグラフ"</span>)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"時間（秒）"</span>)  <span class="co"># ← ここがX軸ラベル</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"値"</span>)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-</section>
-<section id="sources" class="level2">
-<h2 class="anchored" data-anchor-id="sources">Sources</h2>
-<ul>
-<li><a href="https://github.com/RyoNakagami/ManualFontInstaller">RyoNakagami &gt; ManualFontInstaller</a></li>
-</ul>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># covariance matrix</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>mean <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">0</span>]</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>cov <span class="op">=</span> [[<span class="dv">1</span>, <span class="dv">0</span>], [<span class="dv">0</span>, <span class="dv">100</span>]]  <span class="co"># diagonal covariance</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># データの準備（xとyの座標）</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>num_points <span class="op">=</span> np.int64(np.linspace(<span class="dv">1</span>, <span class="dv">1200</span>, <span class="dv">13</span>))</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># byte list</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>kb_svg <span class="op">=</span> []</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>kb_png <span class="op">=</span> []</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>kb_pdf <span class="op">=</span> []</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># 散布図の作成とSVGへの保存</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> num <span class="kw">in</span> num_points:</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    x, y <span class="op">=</span> np.random.multivariate_normal(mean, cov, num).T</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    trace <span class="op">=</span> go.Scatter(x<span class="op">=</span>x, y<span class="op">=</span>y, mode<span class="op">=</span><span class="st">"markers"</span>, marker<span class="op">=</span><span class="bu">dict</span>(size<span class="op">=</span><span class="dv">10</span>))</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    fig <span class="op">=</span> go.Figure(data<span class="op">=</span>[trace])</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># SVGとして保存</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    svg_content <span class="op">=</span> fig.to_image(<span class="bu">format</span><span class="op">=</span><span class="st">"svg"</span>)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    png_content <span class="op">=</span> fig.to_image(<span class="bu">format</span><span class="op">=</span><span class="st">"png"</span>)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    pdf_content <span class="op">=</span> fig.to_image(<span class="bu">format</span><span class="op">=</span><span class="st">"pdf"</span>)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ファイルサイズを取得(KBに換算)</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    kb_svg.append(<span class="bu">len</span>(svg_content) <span class="op">/</span> <span class="dv">1024</span>)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    kb_png.append(<span class="bu">len</span>(png_content) <span class="op">/</span> <span class="dv">1024</span>)</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    kb_pdf.append(<span class="bu">len</span>(pdf_content) <span class="op">/</span> <span class="dv">1024</span>)</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    <span class="kw">del</span> x, y, svg_content, png_content, pdf_content</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------------------------</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Create line plot for file sizes</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------------------------</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="co"># color setup</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>okabe_ito_colors <span class="op">=</span> [</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>    <span class="st">"#000000"</span>,</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    <span class="st">"#E69F00"</span>,</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>    <span class="st">"#56B4E9"</span>,</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>    <span class="st">"#009E73"</span>,</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>    <span class="st">"#F0E442"</span>,</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>    <span class="st">"#0072B2"</span>,</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>    <span class="st">"#D55E00"</span>,</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>    <span class="st">"#CC79A7"</span>,</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>fig_bytes <span class="op">=</span> go.Figure()</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="co"># Add SVG line</span></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>fig_bytes.add_trace(</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>    go.Scatter(</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>num_points,</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>kb_svg,</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>        mode<span class="op">=</span><span class="st">"lines+markers"</span>,</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>        name<span class="op">=</span><span class="st">"SVG File Size"</span>,</span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>        line<span class="op">=</span><span class="bu">dict</span>(color<span class="op">=</span>okabe_ito_colors[<span class="dv">1</span>], width<span class="op">=</span><span class="dv">2</span>),</span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>        marker<span class="op">=</span><span class="bu">dict</span>(size<span class="op">=</span><span class="dv">6</span>),</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="co"># Add PNG line</span></span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>fig_bytes.add_trace(</span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>    go.Scatter(</span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>num_points,</span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>kb_png,</span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>        mode<span class="op">=</span><span class="st">"lines+markers"</span>,</span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>        name<span class="op">=</span><span class="st">"PNG File Size"</span>,</span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>        line<span class="op">=</span><span class="bu">dict</span>(color<span class="op">=</span>okabe_ito_colors[<span class="dv">2</span>], width<span class="op">=</span><span class="dv">2</span>),</span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a>        marker<span class="op">=</span><span class="bu">dict</span>(size<span class="op">=</span><span class="dv">6</span>),</span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a><span class="co"># Add PDF line</span></span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a>fig_bytes.add_trace(</span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a>    go.Scatter(</span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>num_points,</span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span>kb_pdf,</span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a>        mode<span class="op">=</span><span class="st">"lines+markers"</span>,</span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a>        name<span class="op">=</span><span class="st">"PDF File Size"</span>,</span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a>        line<span class="op">=</span><span class="bu">dict</span>(color<span class="op">=</span>okabe_ito_colors[<span class="dv">3</span>], width<span class="op">=</span><span class="dv">2</span>),</span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a>        marker<span class="op">=</span><span class="bu">dict</span>(size<span class="op">=</span><span class="dv">6</span>),</span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a><span class="co"># Update layout</span></span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a>fig_bytes.update_layout(</span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="bu">dict</span>(</span>
+<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a>        text<span class="op">=</span><span class="st">"Plotly-based File Size Comparison: SVG, PNG vs PDF"</span>,</span>
+<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span><span class="fl">0.075</span>,</span>
+<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a>        xanchor<span class="op">=</span><span class="st">"left"</span>,</span>
+<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span><span class="fl">0.95</span>,</span>
+<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a>        yanchor<span class="op">=</span><span class="st">"top"</span>,</span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a>        font<span class="op">=</span><span class="bu">dict</span>(size<span class="op">=</span><span class="dv">20</span>),</span>
+<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a>    margin<span class="op">=</span><span class="bu">dict</span>(t<span class="op">=</span><span class="dv">80</span>, b<span class="op">=</span><span class="dv">40</span>),</span>
+<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a>    xaxis_title<span class="op">=</span><span class="st">"Number of Data Points"</span>,</span>
+<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a>    yaxis_title<span class="op">=</span><span class="st">"File Size (KB)"</span>,</span>
+<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a>    hovermode<span class="op">=</span><span class="st">"x unified"</span>,</span>
+<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a>    template<span class="op">=</span><span class="st">"plotly_white"</span>,</span>
+<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a>    width<span class="op">=</span><span class="dv">640</span>,</span>
+<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a>    height<span class="op">=</span><span class="dv">400</span>,</span>
+<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a>    legend<span class="op">=</span><span class="bu">dict</span>(</span>
+<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a>        orientation<span class="op">=</span><span class="st">"h"</span>,  <span class="co"># horizontal layout</span></span>
+<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a>        yanchor<span class="op">=</span><span class="st">"bottom"</span>,</span>
+<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span><span class="fl">1.02</span>,  <span class="co"># slightly above the plot</span></span>
+<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a>        xanchor<span class="op">=</span><span class="st">"center"</span>,</span>
+<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span><span class="fl">0.5</span>,  <span class="co"># center-align</span></span>
+<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a><span class="co"># Update axes for better readability</span></span>
+<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a>fig_bytes.update_xaxes(showgrid<span class="op">=</span><span class="va">True</span>, gridwidth<span class="op">=</span><span class="dv">1</span>, gridcolor<span class="op">=</span><span class="st">"lightgray"</span>)</span>
+<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a>fig_bytes.update_yaxes(showgrid<span class="op">=</span><span class="va">True</span>, gridwidth<span class="op">=</span><span class="dv">1</span>, gridcolor<span class="op">=</span><span class="st">"lightgray"</span>)</span>
+<span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the plot</span></span>
+<span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a>fig_bytes.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+        <script type="text/javascript">
+        window.PlotlyConfig = {MathJaxConfig: 'local'};
+        if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}
+        </script>
+        <script type="module">import "https://cdn.plot.ly/plotly-3.0.1.min"</script>
+        
+</div>
+<div class="cell-output cell-output-display">
+<div>            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_SVG"></script><script type="text/javascript">if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}</script>                <script type="text/javascript">window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+        <script charset="utf-8" src="https://cdn.plot.ly/plotly-3.0.1.min.js" integrity="sha256-oy6Be7Eh6eiQFs5M7oXuPxxm9qbJXEtTpfSI93dW16Q=" crossorigin="anonymous"></script>                <div id="fc9f0cc7-e5d2-43fa-9936-ef79a010be5a" class="plotly-graph-div" style="height:400px; width:640px;"></div>            <script type="text/javascript">                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("fc9f0cc7-e5d2-43fa-9936-ef79a010be5a")) {                    Plotly.newPlot(                        "fc9f0cc7-e5d2-43fa-9936-ef79a010be5a",                        [{"line":{"color":"#E69F00","width":2},"marker":{"size":6},"mode":"lines+markers","name":"SVG File Size","x":{"dtype":"i2","bdata":"AQBkAMgALAGQAfQBWAK8AiADhAPoA0wEsAQ="},"y":[5.8046875,24.138671875,42.6943359375,59.5224609375,77.404296875,95.134765625,112.1201171875,129.552734375,146.8681640625,165.0048828125,181.970703125,198.9072265625,216.6435546875],"type":"scatter"},{"line":{"color":"#56B4E9","width":2},"marker":{"size":6},"mode":"lines+markers","name":"PNG File Size","x":{"dtype":"i2","bdata":"AQBkAMgALAGQAfQBWAK8AiADhAPoA0wEsAQ="},"y":[16.234375,36.1181640625,50.796875,59.091796875,67.451171875,73.6748046875,79.4140625,84.5458984375,87.2431640625,86.103515625,89.9306640625,92.0224609375,94.9052734375],"type":"scatter"},{"line":{"color":"#009E73","width":2},"marker":{"size":6},"mode":"lines+markers","name":"PDF File Size","x":{"dtype":"i2","bdata":"AQBkAMgALAGQAfQBWAK8AiADhAPoA0wEsAQ="},"y":[7.1083984375,9.060546875,11.06640625,12.7451171875,14.5849609375,16.51171875,18.22265625,20.0517578125,21.822265625,23.732421875,25.4921875,27.2412109375,29.048828125],"type":"scatter"}],                        {"template":{"data":{"barpolar":[{"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"#C8D4E3","linecolor":"#C8D4E3","minorgridcolor":"#C8D4E3","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"#C8D4E3","linecolor":"#C8D4E3","minorgridcolor":"#C8D4E3","startlinecolor":"#2a3f5f"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"choropleth"}],"contourcarpet":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"contourcarpet"}],"contour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"contour"}],"heatmap":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmap"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2dcontour"}],"histogram2d":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2d"}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"mesh3d":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergeo"}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergl"}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermapbox"}],"scattermap":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermap"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolargl"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolar"}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"geo":{"bgcolor":"white","lakecolor":"white","landcolor":"white","showlakes":true,"showland":true,"subunitcolor":"#C8D4E3"},"hoverlabel":{"align":"left"},"hovermode":"closest","mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30},"paper_bgcolor":"white","plot_bgcolor":"white","polar":{"angularaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":""},"bgcolor":"white","radialaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":""}},"scene":{"xaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","gridwidth":2,"linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8"},"yaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","gridwidth":2,"linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8"},"zaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","gridwidth":2,"linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8"}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"ternary":{"aaxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""},"baxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""},"bgcolor":"white","caxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""}},"title":{"x":0.05},"xaxis":{"automargin":true,"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":"","title":{"standoff":15},"zerolinecolor":"#EBF0F8","zerolinewidth":2},"yaxis":{"automargin":true,"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":"","title":{"standoff":15},"zerolinecolor":"#EBF0F8","zerolinewidth":2}}},"title":{"font":{"size":20},"text":"Plotly-based File Size Comparison: SVG, PNG vs PDF","x":0.075,"xanchor":"left","y":0.95,"yanchor":"top"},"margin":{"t":80,"b":40},"legend":{"orientation":"h","yanchor":"bottom","y":1.02,"xanchor":"center","x":0.5},"xaxis":{"title":{"text":"Number of Data Points"},"showgrid":true,"gridwidth":1,"gridcolor":"lightgray"},"yaxis":{"title":{"text":"File Size (KB)"},"showgrid":true,"gridwidth":1,"gridcolor":"lightgray"},"hovermode":"x unified","width":640,"height":400},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('fc9f0cc7-e5d2-43fa-9936-ef79a010be5a');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };            </script>        </div>
+</div>
+</div>
+</div>
+<hr>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -1062,13 +1294,13 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../posts/eda-setup/eda-rules.html" class="pagination-link" aria-label="データ可視化の20 Rules">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">データ可視化の20 Rules</span></span>
+      <a href="../../posts/visualization-components/legends.html" class="pagination-link" aria-label="Legends(凡例)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Legends(凡例)</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../posts/eda-setup/inkscape.html" class="pagination-link" aria-label="Inkscapeの使い方">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Inkscapeの使い方</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../posts/1D-datavisualization/chapter-header.html" class="pagination-link" aria-label="1次元データ">
+        <span class="nav-page-text">1次元データ</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1089,7 +1321,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </a>
   </li>  
 </ul>
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RyoNakagami/regmonkey_datavisualization/edit/main/posts/eda-setup/font-setup.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/regmonkey_datavisualization/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RyoNakagami/regmonkey_datavisualization/edit/main/posts/visualization-components/image-file-format.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/regmonkey_datavisualization/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
